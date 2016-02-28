@@ -1,0 +1,51 @@
+<div class="cell auto-size padding20 bg-white">
+    <h1 class="text-light">Daftar Paket kerja 
+        <span class="place-right">
+	    <button class="button primary small-button" onclick="showDialog('dialog')"><span class="mif-plus"></span></button>
+	    <button class="button warning small-button" onclick="showDialog('dialog')"><span class="mif-loop2"></span></button>
+	    <button class="button danger small-button" onclick="showDialog('dialog')"><span class="mif-bin"></span></button>
+        </span>
+    </h1>
+    <hr class="thin bg-grayLighter">
+    <ul class="breadcrumbs2 small   ">
+        <li><a href="<?php echo base_url();?>index.php/dashboard"><span class="icon mif-home"></span></a></li>
+        <li><a href="<?php echo base_url();?>index.php/dashboard">Dashboard</a></li>
+        <li><a href="#">Master</a></li>
+        <li><a href="#">Daftar Paket kerja</a></li>
+    </ul>
+    <hr class="thin bg-grayLighter">
+    <table class="dataTable border bordered" data-role="datatable" data-auto-width="false">
+        <thead>
+            <tr>
+                <td style="width: 20px">
+                </td>
+                <td class="sortable-column sort-asc">Kode Paket</td>
+                <td class="sortable-column">Nama Paket</td>
+                <td class="sortable-column">Waktu Kerja</td>
+                <td class="sortable-column">Harga</td>
+                <td style="width: 20px">Opsi</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <label class="input-control checkbox small-check no-margin">
+                        <input type="checkbox">
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>RGR</td>
+                <td>Reguler</td>
+                <td>3 Hari</td>
+                <td>Rp. 1000</td>
+                <td><button class="button small-button" onclick="showDialog('dialog')"><span class="mif-pencil"></span></button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div data-role="dialog" id="dialog" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true">
+            <h1>Tambah data</h1>
+            <p>
+                This dialog with colored overlay
+            </p>
+        </div>
+</div>

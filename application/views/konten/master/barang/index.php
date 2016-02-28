@@ -1,5 +1,5 @@
 <div class="cell auto-size padding20 bg-white">
-    <h1 class="text-light">Daftar Paket kerja 
+    <h1 class="text-light">Daftar Barang
         <span class="place-right">
 	    <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
 	    <button class="button warning small-button" ><span class="mif-loop2"></span></button>
@@ -7,11 +7,11 @@
         </span>
     </h1>
     <hr class="thin bg-grayLighter">
-    <ul class="breadcrumbs2 small   ">
+    <ul class="breadcrumbs2 small">
         <li><a href="<?php echo base_url();?>index.php/dashboard"><span class="icon mif-home"></span></a></li>
         <li><a href="<?php echo base_url();?>index.php/dashboard">Dashboard</a></li>
         <li><a href="#">Master</a></li>
-        <li><a href="#">Daftar Paket kerja</a></li>
+        <li><a href="#">Daftar Barang</a></li>
     </ul>
     <hr class="thin bg-grayLighter">
     <table class="dataTable border bordered" data-role="datatable" data-auto-width="false">
@@ -19,10 +19,9 @@
             <tr>
                 <td style="width: 20px">
                 </td>
-                <td class="sortable-column sort-asc">Kode Paket</td>
-                <td class="sortable-column">Nama Paket</td>
-                <td class="sortable-column">Waktu Kerja</td>
-                <td class="sortable-column">Harga</td>
+                <td class="sortable-column sort-asc">Kode barang</td>
+                <td class="sortable-column">Nama barang</td>
+                <td class="sortable-column">Kategori</td>
                 <td style="width: 20px">Opsi</td>
             </tr>
         </thead>
@@ -34,10 +33,9 @@
                         <span class="check"></span>
                     </label>
                 </td>
-                <td>RGR</td>
-                <td>Reguler</td>
-                <td>3 Hari</td>
-                <td>Rp. 1000</td>
+                <td>JS</td>
+                <td>Jas</td>
+                <td>Jas</td>
                 <td><button class="button small-button" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
             </tr>
         </tbody>
@@ -47,37 +45,30 @@
             <h1 class="text-light">Tambah data</h1>
             <hr class="thin bg-grayLighter">
             <br />
-            <label>Kode paket</label>
+            <label>Kode barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_paket">
+                <input type="text" name="kode_metodekirim">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
-            <label>Nama paket</label>
+            <label>Nama barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_paket">
+                <input type="text" name="nama_metodekirim">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
-            <label>Waktu Kerja</label>
+            <label>Kategori Barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="waktu">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
-            </div>
-            <br />
-            <br />
-            <label>Harga</label>
-            <div class="input-control password full-size" data-role="input">
-                <input type="text" name="harga">
+                <input type="text" name="nama_metodekirim">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <div class="form-actions place-right">
                 <input type="reset" class="button" value="Batalkan" />
-                <input type="submit" class="button primary" name="simpanpaket" value="Simpan" />
+                <input type="submit" class="button primary" name="simpanmetodekirim" value="Simpan" />
             </div>
         </form>
     </div>
@@ -86,37 +77,30 @@
             <h1 class="text-light">Ubah data</h1>
             <hr class="thin bg-grayLighter">
             <br />
-            <label>Kode paket</label>
+            <label>Kode barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_paket">
+                <input type="text" name="kode_metodekirim">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
-            <label>Nama paket</label>
+            <label>Nama barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_paket">
+                <input type="text" name="nama_metodekirim">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
-            <label>Waktu Kerja</label>
+            <label>Kategori barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="waktu">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
-            </div>
-            <br />
-            <br />
-            <label>Harga</label>
-            <div class="input-control password full-size" data-role="input">
-                <input type="text" name="harga">
+                <input type="text" name="nama_metodekirim">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <div class="form-actions place-right">
                 <input type="reset" class="button" value="Batalkan" />
-                <input type="submit" class="button primary" name="simpanpaket" value="Simpan" />
+                <input type="submit" class="button primary" name="ubahmetodekirim" value="Simpan" />
             </div>
         </form>
     </div>
@@ -130,15 +114,17 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Kode paket</th>
-                    <th>Nama paket</th>
+                    <th>Kode Kategori</th>
+                    <th>Nama Kategori</th>
+                    <th>Kategori</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>RGR</td>
-                    <td>Reguler</td>
+                    <td>JS</td>
+                    <td>Jas</td>
+                    <td>Jas</td>
                 </tr>
             </tbody>
         </table>

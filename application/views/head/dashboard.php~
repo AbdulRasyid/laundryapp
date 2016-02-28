@@ -38,16 +38,6 @@
             height: auto;
         }
     </style>
-    <script>
-        function showDialog(id){
-            var dialog = $("#"+id).data('dialog');
-            if (!dialog.element.data('opened')) {
-                dialog.open();
-            } else {
-                dialog.close();
-            }
-        }
-    </script>
 </head>
 <body>
 <header class="app-bar fixed-top navy" data-role="appbar">
@@ -58,15 +48,15 @@
             <li>
                 <a href="" class="dropdown-toggle">Master</a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li><a href="<?php echo base_url();?>index.php/layanan">Daftar Layanan</a></li>
-                    <li><a href="<?php echo base_url();?>index.php/metodekirim">Daftar Metode pengiriman</a></li>
-                    <li><a href="<?php echo base_url();?>index.php/jeniscucian">Daftar Jenis cucian</a></li>
-                    <li><a href="<?php echo base_url();?>index.php/ukuran">Daftar Ukuran</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Layanan</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Metode pengiriman</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Jenis cucian</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Ukuran</a></li>
                     <li><a href="<?php echo base_url();?>index.php/paket">Daftar Paket kerja</a></li>
-                    <li><a href="<?php echo base_url();?>index.php/kategoribarang">Daftar Kategori barang</a></li>
-                    <li><a href="<?php echo base_url();?>index.php/barang">Daftar Barang</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Kategori barang</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Daftar Barang</a></li>
                     <li class="divider"></li>
-                    <li><a href="<?php echo base_url();?>index.php/rakitharga">Rakit Harga cucian</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/paket">Rakit Harga cucian</a></li>
                 </ul>
             </li>
             <li><a href="<?php echo base_url();?>index.php/pelanggan">Pelanggan</a></li>

@@ -1,5 +1,5 @@
 <?php if (! defined('BASEPATH')) exit('No direct script acces allowed');
- class Paket extends CI_Controller {
+ class Kategoribarang extends CI_Controller {
 
  	function __construct()
  	{
@@ -19,7 +19,7 @@
  	public function index()
  	{
  		$this->load->view('head/dashboard');
- 		$this->load->view('konten/master/paket/index'); //konten web
+ 		$this->load->view('konten/master/kategoribarang/index'); //konten web
  		$this->load->view('footer/dashboard');
  	}
  }
