@@ -25,21 +25,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <?php 
+            $no = 0;
+            foreach ($load as $layanan) { 
+                $no++;
+            ?>
+            <tr class="btnDelete" data-id="<?php echo $layanan['kode_layanan'];?>">
                 <td>
                     <label class="input-control checkbox small-check no-margin">
-                        <input type="checkbox">
+                        <input type="checkbox" name="check[]" value="<?php echo $no;?>" >
                         <span class="check"></span>
                     </label>
                 </td>
-                <td>CB</td>
-                <td>Cuci Basah</td>
-                <td><button class="button small-button" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
+                <td><?php echo $layanan['kode_layanan'];?></td>
+                <td><?php echo $layanan['nama_layanan'];?></td>
+                <td><button class="btnDelete button small-button" href="" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
             </tr>
+            <?php } ?>
         </tbody>
     </table>
     <div data-role="dialog" id="dialogtambah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
-        <form method="post" action="">
+        <form method="post" action="<?php echo base_url();?>index.php/layanan/tambah">
             <h1 class="text-light">Tambah data</h1>
             <hr class="thin bg-grayLighter">
             <br />
@@ -94,23 +100,16 @@
         <p>
             Apa anda yakin ingin menghapus data ?
         </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Kode layanan</th>
-                    <th>Nama layanan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>CB</td>
-                    <td>Cuci Basah</td>
-                </tr>
-            </tbody>
-        </table>
         <hr class="thin bg-grayLighter">
-        <button class="button primary full-size"><span class="icon mif-bin"></span> Lakukan</button>
+        <div class="grid">
+            <div class="row cells2">
+                <div class="cell">
+                    <button class="button full-size"><span class="icon mif-not"></span> Tidak</button>
+                </div>
+                <div class="cell">
+                    <button class="button primary full-size"><span class="icon mif-bin"></span> Lakukan</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

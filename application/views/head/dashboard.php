@@ -39,6 +39,7 @@
         }
     </style>
     <script>
+
         function showDialog(id){
             var dialog = $("#"+id).data('dialog');
             if (!dialog.element.data('opened')) {
@@ -50,7 +51,7 @@
     </script>
 </head>
 <body>
-<header class="app-bar fixed-top navy" data-role="appbar">
+<header class="app-bar fixed-top" data-role="appbar">
         <a class="app-bar-element branding"><span class="mif-shopping-basket2"></span> LaundryApps</a>
         <span class="app-bar-divider"></span>
         <ul class="app-bar-menu small-dropdown">
