@@ -54,4 +54,23 @@
 
  		}
  	}
+
+ 	function hapus()
+ 	{
+ 		$chkbox = $this->input->post('check');
+
+ 		if(is_array($chkbox)){
+		  for($i = 0; $i < count($chkbox); $i++){
+
+		  	$this->global_model->delete('layanan', array('kode_layanan' => $chkbox[$i]));
+
+		  }
+
+		  redirect(site_url('layanan'));
+			
+		}else if(empty($chkbox)){
+		   redirect(site_url('layanan'));
+		}
+ 
+ 	}
  }

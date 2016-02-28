@@ -48,6 +48,7 @@
                 dialog.close();
             }
         }
+
     </script>
 </head>
 <body>

@@ -8,11 +8,12 @@
  		$this->load->helper('url');
  		$this->load->library('session');
 
- 		if($this->session->userdata(
+ 		/*if($this->session->userdata(
  			'namalengkap','namauser','emailuser'))
         {
             redirect(site_url('dashboard'));
-        }
+        }*/
+
  	}
 
  	public function index()

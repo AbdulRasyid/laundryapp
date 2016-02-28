@@ -14,6 +14,7 @@
         <li><a href="#">Daftar Layanan</a></li>
     </ul>
     <hr class="thin bg-grayLighter">
+    <form method="post" id="myform" action="<?php echo base_url(); ?>index.php/layanan/hapus">
     <table class="dataTable border bordered" data-role="datatable" data-auto-width="false">
         <thead>
             <tr>
@@ -26,24 +27,23 @@
         </thead>
         <tbody>
             <?php 
-            $no = 0;
             foreach ($load as $layanan) { 
-                $no++;
-            ?>
-            <tr class="btnDelete" data-id="<?php echo $layanan['kode_layanan'];?>">
+            ?>  
+            <tr>
                 <td>
                     <label class="input-control checkbox small-check no-margin">
-                        <input type="checkbox" name="check[]" value="<?php echo $no;?>" >
+                        <input type="checkbox" name="check[]" value="<?php echo $layanan['kode_layanan'];?>">
                         <span class="check"></span>
                     </label>
                 </td>
                 <td><?php echo $layanan['kode_layanan'];?></td>
                 <td><?php echo $layanan['nama_layanan'];?></td>
-                <td><button class="btnDelete button small-button" href="" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
+                <td><button type="button" class="button small-button" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
         </tbody>
     </table>
+    </form>
     <div data-role="dialog" id="dialogtambah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
         <form method="post" action="<?php echo base_url();?>index.php/layanan/tambah">
             <h1 class="text-light">Tambah data</h1>
@@ -101,15 +101,6 @@
             Apa anda yakin ingin menghapus data ?
         </p>
         <hr class="thin bg-grayLighter">
-        <div class="grid">
-            <div class="row cells2">
-                <div class="cell">
-                    <button class="button full-size"><span class="icon mif-not"></span> Tidak</button>
-                </div>
-                <div class="cell">
-                    <button class="button primary full-size"><span class="icon mif-bin"></span> Lakukan</button>
-                </div>
-            </div>
-        </div>
+        <button type="submit" form="myform" class="button primary full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
