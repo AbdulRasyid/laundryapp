@@ -44,18 +44,24 @@
 
  			$sql = $this->global_model->find_by('user', array('username' => $username, 'password' => $md5pass));
 
- 			if($sql!=Null){
- 				$sessiondata = array(
- 					'namalengkap' => $sql['namalengkap'],
- 					'namauser' => $sql['username'],
- 					'emailuser' => $sql['email']);
-
- 				$this->session->set_userdata($sessiondata);
-
- 				redirect(site_url('dashboard'));
- 			}else{
- 				$this->message('alert','Informasi !','Username dan password tidak valid','login');
+ 			if($username == "" || $password == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','login');
  				redirect(site_url('/'));
+ 			}else{
+ 				if($sql!=Null){
+	 				$sessiondata = array(
+	 					'namalengkap' => $sql['namalengkap'],
+	 					'namauser' => $sql['username'],
+	 					'emailuser' => $sql['email']);
+
+	 				$this->session->set_userdata($sessiondata);
+
+	 				redirect(site_url('dashboard'));
+	 			}else{
+	 				$this->message('alert','Informasi !','Username dan password tidak valid','login');
+	 				redirect(site_url('/'));
+	 			}
+
  			}
 
  		}
