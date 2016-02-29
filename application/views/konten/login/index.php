@@ -1,7 +1,7 @@
 <div class="login-form padding20 block-shadow">
         <form method="post" action="">
             <h1 class="text-light">Please Login</h1>
-            <hr class="thin"/>
+            <hr class="thin bg-grayLighter">
             <br />
             <label for="user_login">Nama pengguna :</label>
             <div class="input-control text full-size" data-role="input">
@@ -23,3 +23,14 @@
             </div>
         </form>
 </div>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "login"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 1000);";
+        echo "});";
+        echo "</script>";
+    }
+?>

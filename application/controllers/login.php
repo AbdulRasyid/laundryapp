@@ -16,8 +16,25 @@
 
  	}
 
+ 	public function message($mode,$caption,$text,$active)
+ 	{
+ 		//generate message
+ 		$messagesession = array(
+ 			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
+ 			'messagetext' => $text,
+ 			'messageactive' => $active);
+ 		$this->session->set_flashdata($messagesession);
+ 	}
+
  	public function index()
  	{
+ 		if($this->session->userdata(
+ 			'namalengkap','namauser','emailuser'))
+        {
+            redirect(site_url('dashboard'));
+        }
+
  		if($this->input->post('login')){
 
  			$username = $this->input->post('username');
@@ -37,6 +54,7 @@
 
  				redirect(site_url('dashboard'));
  			}else{
+ 				$this->message('alert','Informasi !','Username dan password tidak valid','login');
  				redirect(site_url('/'));
  			}
 

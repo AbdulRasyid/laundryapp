@@ -2,7 +2,6 @@
     <h1 class="text-light">Daftar Layanan 
         <span class="place-right">
 	    <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
-	    <button class="button warning small-button" ><span class="mif-loop2"></span></button>
 	    <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -105,7 +104,7 @@
             Apa anda yakin ingin menghapus data ?
         </p>
         <hr class="thin bg-grayLighter">
-        <button type="submit" form="myform" class="button primary full-size" ><span class="icon mif-bin"></span> Lakukan</button>
+        <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
 <script type="text/javascript">
