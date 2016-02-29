@@ -19,9 +19,13 @@
         <thead>
             <tr>
                 <td style="width: 20px">
+                    <label class="input-control checkbox small-check no-margin">
+                        <input type="checkbox" onclick="for(c in document.getElementsByName('check[]')) document.getElementsByName('check[]').item(c).checked = this.checked">
+                        <span class="check"></span>
+                    </label>
                 </td>
-                <td class="sortable-column sort-asc" style="width: 200px;">Kode Layanan</td>
-                <td class="sortable-column">Nama Layanan</td>
+                <td>Kode Layanan</td>
+                <td>Nama Layanan</td>
                 <td style="width: 20px">Opsi</td>
             </tr>
         </thead>
