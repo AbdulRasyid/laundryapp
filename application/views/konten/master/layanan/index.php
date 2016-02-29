@@ -33,16 +33,16 @@
             <?php 
             foreach ($load as $layanan) { 
             ?>  
-            <tr>
+            <tr class="record">
                 <td>
                     <label class="input-control checkbox small-check no-margin">
                         <input type="checkbox" name="check[]" value="<?php echo $layanan['kode_layanan'];?>">
                         <span class="check"></span>
                     </label>
                 </td>
-                <td><?php echo $layanan['kode_layanan'];?></td>
-                <td><?php echo $layanan['nama_layanan'];?></td>
-                <td><button type="button" class="button small-button" onclick="showDialog('dialogubah')"><span class="mif-pencil"></span></button></td>
+                <td id="kode"><?php echo $layanan['kode_layanan'];?></td>
+                <td id="nama"><?php echo $layanan['nama_layanan'];?></td>
+                <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
         </tbody>
@@ -74,20 +74,20 @@
         </form>
     </div>
     <div data-role="dialog" id="dialogubah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
-        <form method="post" action="">
+        <form method="post" id="ubahform">
             <h1 class="text-light">Ubah data</h1>
             <hr class="thin bg-grayLighter">
             <br />
             <label>Kode layanan</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_layanan">
+                <input type="text" name="kode_layanan" id="kodelayanan">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Nama layanan</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_layanan">
+                <input type="text" name="nama_layanan" id="namalayanan">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -108,3 +108,25 @@
         <button type="submit" form="myform" class="button primary full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
+<script type="text/javascript">
+         $(document).ready(function() {
+            var s = document.getElementById('editbutton');
+             $(".editbutton").click(function() {
+                //set which record we're editing so we can update it later
+                var record = $(this).parents('.record');
+                //populate the editing form within the dialog
+                $('#kodelayanan').val(record.find('#kode').html());
+                $('#namalayanan').val(record.find('#nama').html());
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/layanan/ubah/" + record.find('#kode').html());
+                //show dialog
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+             });
+
+
+         });
+</script>

@@ -73,4 +73,39 @@
 		}
  
  	}
+
+ 	function ubah($id){
+
+ 		if($this->input->post('ubahlayanan')){
+
+ 			$data = $this->input->post();
+
+ 			$kode = $this->input->post('kode_layanan');
+ 			$nama = $this->input->post('nama_layanan');
+
+ 			$sqlkode = $this->global_model->find_by('layanan', array('kode_layanan' => $kode));
+ 			$sqlnama = $this->global_model->find_by('layanan', array('nama_layanan' => $nama));
+
+ 			//validasi
+ 			$sql = $this->global_model->find_by('layanan', array('kode_layanan' => $id));
+
+ 			if($kode == $sql['kode_layanan'] && $nama == $sql['nama_layanan']){
+ 				redirect(site_url('layanan'));
+ 			}else{
+ 				if($sqlnama != Null && $nama != $sql['nama_layanan'] && $sqlkode != Null && $kode != $sql['kode_layanan']){
+ 					redirect(site_url('layanan'));
+ 				}else if($sqlkode != Null && $kode != $sql['kode_layanan']){
+ 					redirect(site_url('layanan'));
+	 			}else if($sqlnama != Null && $nama != $sql['nama_layanan']){
+	 				redirect(site_url('layanan'));
+	 			}else {
+	 				unset($data['ubahlayanan']);
+			 		$this->global_model->update('layanan',$data, array('kode_layanan' => $id));
+			 		redirect(site_url('layanan'));
+	 			}
+ 			}
+
+ 		}
+ 		
+ 	}
  }
