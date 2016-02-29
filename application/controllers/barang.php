@@ -16,10 +16,97 @@
 
  	}
 
+ 	public function message($mode,$text,$active)
+ 	{
+ 		//generate message
+ 		$messagesession = array(
+ 			'messagemode' => $mode,
+ 			'messagetext' => $text,
+ 			'messageactive' => $active);
+ 		$this->session->set_flashdata($messagesession);
+ 	}
+
+
  	public function index()
  	{
+ 		$data['load'] = $this->global_model->find_all('barang');
  		$this->load->view('head/dashboard');
- 		$this->load->view('konten/master/barang/index'); //konten web
+ 		$this->load->view('konten/master/barang/index', $data); //konten web
  		$this->load->view('footer/dashboard');
+ 	}
+
+ 	function tambah(){
+
+ 		if($this->input->post('simpanbarang')){
+
+ 			$data = $this->input->post();
+
+ 			$nama = $this->input->post('nama_barang');
+ 			$kode = $this->input->post('kode_barang');
+
+ 			$check = count($this->global_model->find_by('barang', array('nama_barang' => $nama, 'kode_barang' => $kode)));
+
+ 			if($check<1){
+ 				unset($data['simpanbarang']);
+ 				$this->global_model->create('barang',$data);
+ 			}
+
+ 			redirect(site_url('barang'));
+
+ 		}
+ 	}
+
+ 	function hapus()
+ 	{
+ 		$chkbox = $this->input->post('check');
+
+ 		if(is_array($chkbox)){
+		  for($i = 0; $i < count($chkbox); $i++){
+
+		  	$this->global_model->delete('barang', array('kode_barang' => $chkbox[$i]));
+
+		  }
+
+		  redirect(site_url('barang'));
+			
+		}else if(empty($chkbox)){
+		   redirect(site_url('barang'));
+		}
+ 
+ 	}
+
+ 	function ubah($id){
+
+ 		if($this->input->post('ubahbarang')){
+
+ 			$data = $this->input->post();
+
+ 			$nama = $this->input->post('nama_barang');
+ 			$kode = $this->input->post('kode_barang');
+
+ 			$sqlnama = $this->global_model->find_by('barang', array('nama_barang' => $nama));
+ 			$sqlkode = $this->global_model->find_by('barang', array('kode_barang' => $kode));
+
+ 			//validasi
+ 			$sql = $this->global_model->find_by('barang', array('kode_barang' => $id));
+
+ 			if($nama == $sql['nama_barang'] && $kode == $sql['kode_barang']){
+ 				redirect(site_url('barang'));
+ 			}else{
+ 				if($sqlnama != Null && $nama != $sql['nama_barang'] && $sqlkode != Null && $kode != $sql['kode_barang']){
+ 					redirect(site_url('barang'));
+ 				}else if($sqlnama != Null && $nama != $sql['nama_barang']){
+ 					redirect(site_url('barang'));
+	 			}else if($sqlkode != Null && $kode != $sql['kode_barang']){
+	 				redirect(site_url('barang'));
+	 			}else {
+	 				unset($data['ubahbarang']);
+			 		$this->global_model->update('barang',$data, array('kode_barang' => $id));
+			 		redirect(site_url('barang'));
+	 			}
+ 			}
+
+ 		}
+ 		
  	}
  }

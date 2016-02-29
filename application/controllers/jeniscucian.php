@@ -44,7 +44,7 @@
  			$ukuran = $this->input->post('kode_ukuran');
  			$kode = $this->input->post('kode_jenis');
 
- 			$check = count($this->global_model->find_by('jenis_cucian', array('kode_jenis' => $kode,'nama_jenis' => $nama, 'kode_ukuran' => $ukuran)));
+ 			$check = count($this->global_model->find_by('jenis_cucian', array('kode_jenis' => $kode,'nama_jenis' => $nama)));
 
  			if($check<1){
  				unset($data['simpanjeniscucian']);
