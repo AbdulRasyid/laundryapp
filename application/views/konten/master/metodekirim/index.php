@@ -42,7 +42,7 @@
                 </td>
                 <td id="kode"><?php echo $pengiriman['kode_pengiriman'];?></td>
                 <td id="nama"><?php echo $pengiriman['nama_pengiriman'];?></td>
-                <td id="harga"><?php echo $pengiriman['harga_kirim'];?></td>
+                <td>Rp. <label id="harga"><?php echo $pengiriman['harga_kirim'];?></label></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -56,7 +56,7 @@
             <br />
             <label>Kode Pengiriman</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_pengiriman">
+                <input type="text" name="kode_pengiriman" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -70,7 +70,7 @@
             <br />
             <label>Harga Kirim</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga_kirim">
+                <input type="text" name="harga_kirim" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -88,7 +88,7 @@
             <br />
             <label>Kode Pengiriman</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_pengiriman" id="kodepengiriman">
+                <input type="text" name="kode_pengiriman" id="kodepengiriman" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -102,7 +102,7 @@
             <br />
             <label>Harga Kirim</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga_kirim" id="hargakirim">
+                <input type="text" name="harga_kirim" id="hargakirim" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -145,4 +145,23 @@
 
 
          });
+</script>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "metodekirim"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}    
 </script>

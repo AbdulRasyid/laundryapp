@@ -29,7 +29,7 @@
         echo "$(document).ready(function() {";
             echo "setTimeout(function(){";
                 echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
-            echo "}, 1000);";
+            echo "}, 500);";
         echo "});";
         echo "</script>";
     }

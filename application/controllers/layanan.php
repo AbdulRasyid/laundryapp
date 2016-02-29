@@ -16,11 +16,12 @@
 
  	}
 
- 	public function message($mode,$text,$active)
+ 	public function message($mode,$caption,$text,$active)
  	{
  		//generate message
  		$messagesession = array(
  			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
  			'messagetext' => $text,
  			'messageactive' => $active);
  		$this->session->set_flashdata($messagesession);
@@ -43,11 +44,24 @@
  			$kode = $this->input->post('kode_layanan');
  			$nama = $this->input->post('nama_layanan');
 
- 			$check = count($this->global_model->find_by('layanan', array('kode_layanan' => $kode, 'nama_layanan' => $nama)));
+ 			$sqlkode = count($this->global_model->find_by('layanan', array('kode_layanan' => $kode)));
+ 			$sqlnama = count($this->global_model->find_by('layanan', array('nama_layanan' => $nama)));
 
- 			if($check<1){
- 				unset($data['simpanlayanan']);
- 				$this->global_model->create('layanan',$data);
+ 			if($kode == "" | $nama == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','layanan');
+ 			}else{
+ 				if($sqlnama > 0 && $sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode dan Nama layanan sudah ada','layanan');
+ 				}else if($sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode layanan sudah ada','layanan');
+ 				}else if($sqlnama > 0) {
+ 					$this->message('alert','Informasi !','Nama layanan sudah ada','layanan');
+ 				}else{
+ 					unset($data['simpanlayanan']);
+ 					$data['kode_layanan'] = strtoupper($kode);
+	 				$this->global_model->create('layanan',$data);
+	 				$this->message('success','Informasi !','Data berhasil ditambahkan','layanan');	
+ 				}
  			}
 
  			redirect(site_url('layanan'));
@@ -66,11 +80,13 @@
 
 		  }
 
-		  redirect(site_url('layanan'));
+		  $this->message('success','Informasi !','Data berhasil dihapus','layanan');
 			
 		}else if(empty($chkbox)){
-		   redirect(site_url('layanan'));
+			$this->message('info','Informasi !','Tidak ada data yang di hapus','layanan');
 		}
+
+		redirect(site_url('layanan'));
  
  	}
 
@@ -89,23 +105,32 @@
  			//validasi
  			$sql = $this->global_model->find_by('layanan', array('kode_layanan' => $id));
 
- 			if($kode == $sql['kode_layanan'] && $nama == $sql['nama_layanan']){
- 				redirect(site_url('layanan'));
+ 			if($kode == "" || $nama ==""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','layanan');
  			}else{
- 				if($sqlnama != Null && $nama != $sql['nama_layanan'] && $sqlkode != Null && $kode != $sql['kode_layanan']){
- 					redirect(site_url('layanan'));
- 				}else if($sqlkode != Null && $kode != $sql['kode_layanan']){
- 					redirect(site_url('layanan'));
-	 			}else if($sqlnama != Null && $nama != $sql['nama_layanan']){
-	 				redirect(site_url('layanan'));
-	 			}else {
-	 				unset($data['ubahlayanan']);
-			 		$this->global_model->update('layanan',$data, array('kode_layanan' => $id));
-			 		redirect(site_url('layanan'));
+ 				if($kode == $sql['kode_layanan'] && $nama == $sql['nama_layanan']){
+	 				$this->message('info','Informasi !','Tidak ada perubahan','layanan');
+	 			}else{
+	 				if($sqlnama != Null && $nama != $sql['nama_layanan'] && $sqlkode != Null && $kode != $sql['kode_layanan']){
+	 					$this->message('alert','Informasi !','Kode dan Nama layanan sudah ada','layanan');
+	 				}else if($sqlkode != Null && $kode != $sql['kode_layanan']){
+	 					$this->message('alert','Informasi !','Kode layanan sudah ada','layanan');
+		 			}else if($sqlnama != Null && $nama != $sql['nama_layanan']){
+		 				$this->message('alert','Informasi !','Nama layanan sudah ada','layanan');
+		 			}else {
+		 				unset($data['ubahlayanan']);
+		 				$data['kode_layanan'] = strtoupper($kode);
+				 		$this->global_model->update('layanan',$data, array('kode_layanan' => $id));
+				 		$this->message('success','Informasi !','Data berhasil di ubah','layanan');
+		 			}
 	 			}
  			}
+
+ 			redirect(site_url('layanan'));
 
  		}
  		
  	}
+
+
  }

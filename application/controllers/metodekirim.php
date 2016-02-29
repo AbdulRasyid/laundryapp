@@ -16,11 +16,12 @@
 
  	}
 
- 	public function message($mode,$text,$active)
+ 	public function message($mode,$caption,$text,$active)
  	{
  		//generate message
  		$messagesession = array(
  			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
  			'messagetext' => $text,
  			'messageactive' => $active);
  		$this->session->set_flashdata($messagesession);
@@ -43,11 +44,24 @@
  			$nama = $this->input->post('nama_pengiriman');
  			$kode = $this->input->post('kode_pengiriman');
 
- 			$check = count($this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama, 'kode_pengiriman' => $kode)));
+ 			$sqlnama = $this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama));
+ 			$sqlkode = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $kode));
 
- 			if($check<1){
- 				unset($data['simpanmetode']);
- 				$this->global_model->create('pengiriman',$data);
+ 			if($kode == "" | $nama == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','metodekirim');
+ 			}else{
+ 				if($sqlnama > 0 && $sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode dan Jenis pengiriman sudah ada','metodekirim');
+ 				}else if($sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode pengiriman sudah ada');
+ 				}else if($sqlnama > 0) {
+ 					$this->message('alert','Informasi !','Jenis pengiriman sudah ada','metodekirim');
+ 				}else{
+ 					unset($data['simpanmetode']);
+ 					$data['kode_pengiriman'] = strtoupper($kode);
+ 					$this->global_model->create('pengiriman',$data);
+	 				$this->message('success','Informasi !','Data berhasil ditambahkan','metodekirim');	
+ 				}
  			}
 
  			redirect(site_url('metodekirim'));
@@ -66,11 +80,13 @@
 
 		  }
 
-		  redirect(site_url('metodekirim'));
+		  $this->message('success','Informasi !','Data berhasil dihapus','metodekirim');
 			
 		}else if(empty($chkbox)){
-		   redirect(site_url('metodekirim'));
+			$this->message('info','Informasi !','Tidak ada data yang di hapus','metodekirim');
 		}
+
+		redirect(site_url('metodekirim'));
  
  	}
 
@@ -89,21 +105,29 @@
  			//validasi
  			$sql = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $id));
 
- 			if($nama == $sql['nama_pengiriman'] && $kode == $sql['kode_pengiriman']){
- 				redirect(site_url('metodekirim'));
+ 			if($kode == "" || $nama ==""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','metodekirim');
  			}else{
- 				if($sqlnama != Null && $nama != $sql['nama_pengiriman'] && $sqlkode != Null && $kode != $sql['kode_pengiriman']){
- 					redirect(site_url('metodekirim'));
- 				}else if($sqlnama != Null && $nama != $sql['nama_pengiriman']){
- 					redirect(site_url('metodekirim'));
-	 			}else if($sqlkode != Null && $kode != $sql['kode_pengiriman']){
-	 				redirect(site_url('metodekirim'));
-	 			}else {
-	 				unset($data['ubahmetode']);
-			 		$this->global_model->update('pengiriman',$data, array('kode_pengiriman' => $id));
-			 		redirect(site_url('metodekirim'));
+	 			if($nama == $sql['nama_pengiriman'] && $kode == $sql['kode_pengiriman']){
+	 				$this->message('info','Informasi !','Tidak ada perubahan','metodekirim');
+	 			}else{
+	 				if($sqlnama != Null && $nama != $sql['nama_pengiriman'] && $sqlkode != Null && $kode != $sql['kode_pengiriman']){
+	 					$this->message('alert','Informasi !','Kode dan Jenis pengiriman sudah ada','metodekirim');
+	 				}else if($sqlnama != Null && $nama != $sql['nama_pengiriman']){
+	 					$this->message('alert','Informasi !','Jenis Pengiriman sudah ada','metodekirim');
+		 			}else if($sqlkode != Null && $kode != $sql['kode_pengiriman']){
+		 				$this->message('alert','Informasi !','Kode pengiriman sudah ada','metodekirim');
+		 			}else {
+		 				unset($data['ubahmetode']);
+		 				$data['kode_pengiriman'] = strtoupper($kode);
+				 		$this->global_model->update('pengiriman',$data, array('kode_pengiriman' => $id));
+				 		$this->message('success','Informasi !','Data berhasil di ubah','metodekirim');
+		 			}
 	 			}
+
  			}
+
+ 			redirect(site_url('metodekirim'));
 
  		}
  		

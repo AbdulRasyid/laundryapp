@@ -54,7 +54,7 @@
             <br />
             <label>Kode layanan</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_layanan">
+                <input type="text" name="kode_layanan" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -79,7 +79,7 @@
             <br />
             <label>Kode layanan</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_layanan" id="kodelayanan">
+                <input type="text" name="kode_layanan" id="kodelayanan" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -129,3 +129,14 @@
 
          });
 </script>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "layanan"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>
