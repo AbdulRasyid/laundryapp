@@ -16,11 +16,12 @@
 
  	}
 
- 	public function message($mode,$text,$active)
+ 	public function message($mode,$caption,$text,$active)
  	{
  		//generate message
  		$messagesession = array(
  			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
  			'messagetext' => $text,
  			'messageactive' => $active);
  		$this->session->set_flashdata($messagesession);
@@ -42,12 +43,27 @@
 
  			$nama = $this->input->post('nama_paket');
  			$kode = $this->input->post('kode_paket');
+ 			$waktu = $this->input->post('waktu');
+ 			$harga = $this->input->post('harga');
 
- 			$check = count($this->global_model->find_by('paket_kerja', array('nama_paket' => $nama, 'kode_paket' => $kode)));
+ 			$sqlnama = count($this->global_model->find_by('paket_kerja', array('nama_paket' => $nama)));
+ 			$sqlkode = count($this->global_model->find_by('paket_kerja', array('kode_paket' => $kode)));
 
- 			if($check<1){
- 				unset($data['simpanpaket']);
- 				$this->global_model->create('paket_kerja',$data);
+ 			if($kode == "" || $nama == "" || $waktu == "" || $harga == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','paket');
+ 			}else{
+ 				if($sqlnama > 0 && $sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode dan Nama paket sudah ada','paket');
+ 				}else if($sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode paket sudah ada');
+ 				}else if($sqlnama > 0) {
+ 					$this->message('alert','Informasi !','Nama paket sudah ada','paket');
+ 				}else{
+ 					unset($data['simpanpaket']);
+ 					$data['kode_paket'] = strtoupper($kode);
+ 					$this->global_model->create('paket_kerja',$data);
+	 				$this->message('success','Informasi !','Data berhasil ditambahkan','paket');	
+ 				}
  			}
 
  			redirect(site_url('paket'));
@@ -66,11 +82,13 @@
 
 		  }
 
-		  redirect(site_url('paket'));
+		  $this->message('success','Informasi !','Data berhasil dihapus','paket');
 			
 		}else if(empty($chkbox)){
-		   redirect(site_url('paket'));
+		   $this->message('info','Informasi !','Tidak ada data yang di hapus','paket');
 		}
+
+		redirect(site_url('paket'));
  
  	}
 
@@ -82,6 +100,8 @@
 
  			$nama = $this->input->post('nama_paket');
  			$kode = $this->input->post('kode_paket');
+ 			$waktu = $this->input->post('waktu');
+ 			$harga = $this->input->post('harga');
 
  			$sqlnama = $this->global_model->find_by('paket_kerja', array('nama_paket' => $nama));
  			$sqlkode = $this->global_model->find_by('paket_kerja', array('kode_paket' => $kode));
@@ -89,22 +109,28 @@
  			//validasi
  			$sql = $this->global_model->find_by('paket_kerja', array('kode_paket' => $id));
 
- 			if($nama == $sql['nama_paket'] && $kode == $sql['kode_paket']){
- 				redirect(site_url('paket'));
+ 			if($kode == "" || $nama == "" || $waktu == "" || $harga == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','paket');
  			}else{
- 				if($sqlnama != Null && $nama != $sql['nama_paket'] && $sqlkode != Null && $kode != $sql['kode_paket']){
- 					redirect(site_url('paket'));
- 				}else if($sqlnama != Null && $nama != $sql['nama_paket']){
- 					redirect(site_url('paket'));
-	 			}else if($sqlkode != Null && $kode != $sql['kode_paket']){
-	 				redirect(site_url('paket'));
-	 			}else {
-	 				unset($data['ubahpaket']);
-			 		$this->global_model->update('paket_kerja',$data, array('kode_paket' => $id));
-			 		redirect(site_url('paket'));
+ 				if($nama == $sql['nama_paket'] && $kode == $sql['kode_paket'] && $waktu == $sql['waktu'] && $harga == $sql['harga']){
+ 					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','paket');
+	 			}else{
+	 				if($sqlnama != Null && $nama != $sql['nama_paket'] && $sqlkode != Null && $kode != $sql['kode_paket']){
+	 					$this->message('alert','Informasi !','Kode dan Nama paket sudah ada','paket');
+	 				}else if($sqlnama != Null && $nama != $sql['nama_paket']){
+	 					$this->message('alert','Informasi !','Nama paket sudah ada','paket');
+		 			}else if($sqlkode != Null && $kode != $sql['kode_paket']){
+		 				$this->message('alert','Informasi !','Kode paket sudah ada','paket');
+		 			}else {
+		 				unset($data['ubahpaket']);
+		 				$data['kode_paket'] = strtoupper($kode);
+				 		$this->global_model->update('paket_kerja',$data, array('kode_paket' => $id));
+				 		$this->message('success','Informasi !','Data berhasil di ubah','paket');
+		 			}
 	 			}
  			}
 
+ 			redirect(site_url('paket'));
  		}
  		
  	}

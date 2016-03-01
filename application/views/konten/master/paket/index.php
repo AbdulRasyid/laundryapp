@@ -44,7 +44,7 @@
                 <td id="kode"><?php echo $paket['kode_paket'];?></td>
                 <td id="nama"><?php echo $paket['nama_paket'];?></td>
                 <td><label id="waktu"><?php echo $paket['waktu'];?></label> Hari</td>
-                <td id="harga"><?php echo $paket['harga'];?></td>
+                <td>Rp. <label id="harga"><?php echo $paket['harga'];?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -58,7 +58,7 @@
             <br />
             <label>Kode Paket</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_paket">
+                <input type="text" name="kode_paket" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -72,14 +72,14 @@
             <br />
             <label>Waktu Kerja</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="waktu">
+                <input type="text" name="waktu" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Harga</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga">
+                <input type="text" name="harga" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -97,7 +97,7 @@
             <br />
             <label>Kode Paket</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_paket" id="kodepaket">
+                <input type="text" name="kode_paket" id="kodepaket" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -111,14 +111,14 @@
             <br />
             <label>Waktu Kerja</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="waktu" id="waktupaket">
+                <input type="text" name="waktu" id="waktupaket" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Harga</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga" id="hargapaket">
+                <input type="text" name="harga" id="hargapaket" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -161,4 +161,23 @@
              });
 
          });
+</script>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "paket"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}    
 </script>

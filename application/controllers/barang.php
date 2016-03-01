@@ -16,11 +16,12 @@
 
  	}
 
- 	public function message($mode,$text,$active)
+ 	public function message($mode,$caption,$text,$active)
  	{
  		//generate message
  		$messagesession = array(
  			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
  			'messagetext' => $text,
  			'messageactive' => $active);
  		$this->session->set_flashdata($messagesession);
@@ -43,12 +44,26 @@
 
  			$nama = $this->input->post('nama_barang');
  			$kode = $this->input->post('kode_barang');
+ 			$kategori = $this->input->post('kode_kategori');
 
- 			$check = count($this->global_model->find_by('barang', array('nama_barang' => $nama, 'kode_barang' => $kode)));
+ 			$sqlnama = count($this->global_model->find_by('barang', array('nama_barang' => $nama)));
+ 			$sqlkode = count($this->global_model->find_by('barang', array('kode_barang' => $kode)));
 
- 			if($check<1){
- 				unset($data['simpanbarang']);
- 				$this->global_model->create('barang',$data);
+ 			if($kode == "" || $nama == "" || $kategori == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','barang');
+ 			}else{
+ 				if($sqlnama > 0 && $sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode dan Nama barang sudah ada','barang');
+ 				}else if($sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode barang sudah ada','barang');
+ 				}else if($sqlnama > 0) {
+ 					$this->message('alert','Informasi !','Nama barang sudah ada','barang');
+ 				}else{
+ 					unset($data['simpanbarang']);
+ 					$data['kode_barang'] = strtoupper($kode);
+ 					$this->global_model->create('barang',$data);
+	 				$this->message('success','Informasi !','Data berhasil ditambahkan','barang');	
+ 				}
  			}
 
  			redirect(site_url('barang'));
@@ -67,11 +82,13 @@
 
 		  }
 
-		  redirect(site_url('barang'));
+		  $this->message('success','Informasi !','Data berhasil dihapus','barang');
 			
 		}else if(empty($chkbox)){
-		   redirect(site_url('barang'));
+			$this->message('info','Informasi !','Tidak ada data yang di hapus','barang');
 		}
+
+		redirect(site_url('barang'));
  
  	}
 
@@ -83,6 +100,7 @@
 
  			$nama = $this->input->post('nama_barang');
  			$kode = $this->input->post('kode_barang');
+ 			$kategori = $this->input->post('kode_kategori');
 
  			$sqlnama = $this->global_model->find_by('barang', array('nama_barang' => $nama));
  			$sqlkode = $this->global_model->find_by('barang', array('kode_barang' => $kode));
@@ -90,21 +108,29 @@
  			//validasi
  			$sql = $this->global_model->find_by('barang', array('kode_barang' => $id));
 
- 			if($nama == $sql['nama_barang'] && $kode == $sql['kode_barang']){
- 				redirect(site_url('barang'));
+ 			if($nama == "" || $kode == "" || $kategori == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','barang');
  			}else{
- 				if($sqlnama != Null && $nama != $sql['nama_barang'] && $sqlkode != Null && $kode != $sql['kode_barang']){
- 					redirect(site_url('barang'));
- 				}else if($sqlnama != Null && $nama != $sql['nama_barang']){
- 					redirect(site_url('barang'));
-	 			}else if($sqlkode != Null && $kode != $sql['kode_barang']){
-	 				redirect(site_url('barang'));
-	 			}else {
-	 				unset($data['ubahbarang']);
-			 		$this->global_model->update('barang',$data, array('kode_barang' => $id));
-			 		redirect(site_url('barang'));
+ 				if($nama == $sql['nama_barang'] && $kode == $sql['kode_barang'] && $kategori == $sql['kode_kategori']){
+ 					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','barang');
+	 			}else{
+	 				if($sqlnama != Null && $nama != $sql['nama_barang'] && $sqlkode != Null && $kode != $sql['kode_barang']){
+	 					$this->message('alert','Informasi !','Kode dan Nama barang sudah ada','barang');
+	 				}else if($sqlnama != Null && $nama != $sql['nama_barang']){
+	 					$this->message('alert','Informasi !','Nama barang sudah ada','barang');
+		 			}else if($sqlkode != Null && $kode != $sql['kode_barang']){
+		 				$this->message('alert','Informasi !','Kode barang sudah ada','barang');
+		 			}else {
+		 				unset($data['ubahbarang']);
+		 				$data['kode_barang'] = strtoupper($kode);
+				 		$this->global_model->update('barang',$data, array('kode_barang' => $id));
+				 		$this->message('success','Informasi !','Data berhasil di ubah','barang');
+				 		
+		 			}
 	 			}
  			}
+
+ 			redirect(site_url('barang'));
 
  		}
  		

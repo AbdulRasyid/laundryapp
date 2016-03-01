@@ -54,7 +54,7 @@
             <br />
             <label>Kode Ukuran</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_ukuran">
+                <input type="text" name="kode_ukuran" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -79,7 +79,7 @@
             <br />
             <label>Kode Ukuran</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_ukuran" id="kodeukuran">
+                <input type="text" name="kode_ukuran" id="kodeukuran" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -128,3 +128,14 @@
 
          });
 </script>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "ukuran"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>

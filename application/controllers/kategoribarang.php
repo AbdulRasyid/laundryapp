@@ -16,11 +16,12 @@
 
  	}
 
- 	public function message($mode,$text,$active)
+ 	public function message($mode,$caption,$text,$active)
  	{
  		//generate message
  		$messagesession = array(
  			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
  			'messagetext' => $text,
  			'messageactive' => $active);
  		$this->session->set_flashdata($messagesession);
@@ -43,11 +44,24 @@
  			$kode = $this->input->post('kode_kategori');
  			$nama = $this->input->post('nama_kategori');
 
- 			$check = count($this->global_model->find_by('kategori_barang', array('kode_kategori' => $kode, 'nama_kategori' => $nama)));
+ 			$sqlkode = count($this->global_model->find_by('kategori_barang', array('kode_kategori' => $kode)));
+ 			$sqlnama = count($this->global_model->find_by('kategori_barang', array('nama_kategori' => $nama)));
 
- 			if($check<1){
- 				unset($data['simpankategori']);
- 				$this->global_model->create('kategori_barang',$data);
+ 			if($kode == "" | $nama == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','kategoribarang');
+ 			}else{
+ 				if($sqlnama > 0 && $sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode dan Nama kategori sudah ada','kategoribarang');
+ 				}else if($sqlkode > 0){
+ 					$this->message('alert','Informasi !','Kode kategori sudah ada','kategoribarang');
+ 				}else if($sqlnama > 0) {
+ 					$this->message('alert','Informasi !','Nama kategori sudah ada','kategoribarang');
+ 				}else{
+ 					unset($data['simpankategori']);
+ 					$data['kode_kategori'] = strtoupper($kode);
+ 					$this->global_model->create('kategori_barang',$data);
+	 				$this->message('success','Informasi !','Data berhasil ditambahkan','kategoribarang');	
+ 				}
  			}
 
  			redirect(site_url('kategoribarang'));
@@ -66,11 +80,12 @@
 
 		  }
 
-		  redirect(site_url('kategoribarang'));
+		  $this->message('success','Informasi !','Data berhasil dihapus','kategoribarang');
 			
 		}else if(empty($chkbox)){
-		   redirect(site_url('kategoribarang'));
+			$this->message('info','Informasi !','Tidak ada data yang di hapus','kategoribarang');
 		}
+		redirect(site_url('kategoribarang'));
  
  	}
 
@@ -89,21 +104,29 @@
  			//validasi
  			$sql = $this->global_model->find_by('kategori_barang', array('kode_kategori' => $id));
 
- 			if($kode == $sql['kode_kategori'] && $nama == $sql['nama_kategori']){
- 				redirect(site_url('kategoribarang'));
+ 			if($kode == "" || $nama == ""){
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','kategoribarang');
  			}else{
- 				if($sqlnama != Null && $nama != $sql['nama_kategori'] && $sqlkode != Null && $kode != $sql['kode_kategori']){
- 					redirect(site_url('kategoribarang'));
- 				}else if($sqlkode != Null && $kode != $sql['kode_kategori']){
- 					redirect(site_url('kategoribarang'));
-	 			}else if($sqlnama != Null && $nama != $sql['nama_kategori']){
-	 				redirect(site_url('kategoribarang'));
-	 			}else {
-	 				unset($data['ubahkategori']);
-			 		$this->global_model->update('kategori_barang',$data, array('kode_kategori' => $id));
-			 		redirect(site_url('kategoribarang'));
+ 				if($kode == $sql['kode_kategori'] && $nama == $sql['nama_kategori']){
+ 					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','kategoribarang');
+	 			}else{
+	 				if($sqlnama != Null && $nama != $sql['nama_kategori'] && $sqlkode != Null && $kode != $sql['kode_kategori']){
+	 					$this->message('alert','Informasi !','Kode dan Nama kategori sudah ada','kategoribarang');
+	 				}else if($sqlkode != Null && $kode != $sql['kode_kategori']){
+	 					$this->message('alert','Informasi !','Kode kategori sudah ada','kategoribarang');
+		 			}else if($sqlnama != Null && $nama != $sql['nama_kategori']){
+		 				$this->message('alert','Informasi !','Nama kategori sudah ada','kategoribarang');
+		 			}else {
+		 				unset($data['ubahkategori']);
+		 				$data['kode_kategori'] = strtoupper($kode);
+				 		$this->global_model->update('kategori_barang',$data, array('kode_kategori' => $id));
+				 		$this->message('success','Informasi !','Data berhasil di ubah','kategoribarang');
+		 			}
 	 			}
+
  			}
+
+ 			redirect(site_url('kategoribarang'));
 
  		}
  		

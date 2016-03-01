@@ -43,11 +43,12 @@
 
  			$nama = $this->input->post('nama_pengiriman');
  			$kode = $this->input->post('kode_pengiriman');
+ 			$harga = $this->input->post('harga_kirim');
 
  			$sqlnama = $this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama));
  			$sqlkode = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $kode));
 
- 			if($kode == "" | $nama == ""){
+ 			if($kode == "" || $nama == "" || $harga == ""){
  				$this->message('alert','Informasi !','Data tidak boleh kosong','metodekirim');
  			}else{
  				if($sqlnama > 0 && $sqlkode > 0){
@@ -98,6 +99,7 @@
 
  			$nama = $this->input->post('nama_pengiriman');
  			$kode = $this->input->post('kode_pengiriman');
+ 			$harga = $this->input->post('harga_kirim');
 
  			$sqlnama = $this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama));
  			$sqlkode = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $kode));
@@ -105,10 +107,10 @@
  			//validasi
  			$sql = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $id));
 
- 			if($kode == "" || $nama ==""){
+ 			if($kode == "" || $nama =="" || $harga == ""){
  				$this->message('alert','Informasi !','Data tidak boleh kosong','metodekirim');
  			}else{
-	 			if($nama == $sql['nama_pengiriman'] && $kode == $sql['kode_pengiriman']){
+	 			if($nama == $sql['nama_pengiriman'] && $kode == $sql['kode_pengiriman'] && $harga == $sql['harga_kirim']){
 	 				$this->message('info','Informasi !','Tidak ada perubahan','metodekirim');
 	 			}else{
 	 				if($sqlnama != Null && $nama != $sql['nama_pengiriman'] && $sqlkode != Null && $kode != $sql['kode_pengiriman']){
