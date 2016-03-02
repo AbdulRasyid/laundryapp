@@ -120,6 +120,11 @@
 		 				unset($data['ubahkategori']);
 		 				$data['kode_kategori'] = strtoupper($kode);
 				 		$this->global_model->update('kategori_barang',$data, array('kode_kategori' => $id));
+				 		//update ke table yang relasi
+					 	$get = strtoupper($kode);
+					 	$data2 = array('kode_kategori' => $get);
+					 	$this->global_model->update('barang',$data2, array('kode_kategori' => $id));
+					 	
 				 		$this->message('success','Informasi !','Data berhasil di ubah','kategoribarang');
 		 			}
 	 			}

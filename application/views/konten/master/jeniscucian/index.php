@@ -78,7 +78,6 @@
             <label>Ukuran</label>
             <div>
                 <select id="select" name="kode_ukuran" class="js-select full-size">
-                    <option></option>
                     <?php
                         foreach ($ukuran as $loadukuran) { 
                     ?>

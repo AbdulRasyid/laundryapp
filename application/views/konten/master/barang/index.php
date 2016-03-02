@@ -42,7 +42,13 @@
                 </td>
                 <td id="kode"><?php echo $barang['kode_barang'];?></td>
                 <td id="nama"><?php echo $barang['nama_barang'];?></td>
-                <td id="kategori"><?php echo $barang['kode_kategori'];?></td>
+                <td id="kategori">
+                    <?php 
+                        $kode = $barang['kode_kategori'];
+                        $sql = $this->global_model->find_by('kategori_barang', array('kode_kategori' =>$kode));
+                        echo $sql['nama_kategori'];
+                    ?>
+                </td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -69,9 +75,14 @@
             <br />
             <br />
             <label>Kategori Barang</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_kategori">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
+            <div>
+                <select id="select" name="kode_kategori" class="js-select full-size">
+                    <?php
+                        foreach ($kategori as $kategoridata) { 
+                    ?>
+                    <option value="<?php echo $kategoridata['kode_kategori']?>"><?php echo $kategoridata['nama_kategori']?></option>
+                    <?php } ?>
+                </select>
             </div>
             <br />
             <br />
@@ -101,9 +112,15 @@
             <br />
             <br />
             <label>Kategori Barang</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_kategori" id="kodekategori">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
+            <div class="input-control select full-size">
+                <select name="kode_kategori" class="full-size">
+                    <option id="ds"></option>
+                    <?php
+                        foreach ($kategori as $kategoridata) {
+                    ?>
+                    <option value="<?php echo $kategoridata['kode_kategori']?>"><?php echo $kategoridata['nama_kategori']?></option>
+                    <?php } ?>
+                </select>
             </div>
             <br />
             <br />
@@ -133,6 +150,8 @@
                 $('#kodebarang').val(record.find('#kode').html());
                 $('#namabarang').val(record.find('#nama').html());
                 $('#kodekategori').val(record.find('#kategori').html());
+                $("#ds").text(record.find('#kategori').html() + " (default)");
+                $('#ds').val('default');
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/barang/ubah/" + record.find('#kode').html());
                 //show dialog
                 var dialog = $("#dialogubah").data('dialog');
