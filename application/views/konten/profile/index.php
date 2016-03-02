@@ -1,7 +1,6 @@
 <div class="cell auto-size padding20 bg-white">
-    <h1 class="text-light">Profile 
-        <span class="mif-user place-right">
-        </span>
+    <h1 class="text-light"><span class="mif-user">
+        </span> Profile 
     </h1>
     <hr class="thin bg-grayLighter">
     <form enctype="multipart/form-data" method="post" action="">
@@ -29,29 +28,6 @@
                         <textarea name="tentang" placeholder="Tentang saya"><?php echo $profile['tentang']; ?></textarea>
                     </div>
                 </div>
-                <div class="cell bg-grayLighter padding10">
-                    <div class="row cells4">
-                        <div class="cell colspan">
-                            <div style="width: 100%;" class="image-container bordered image-format-square">
-                                <div class="frame">
-                                    <div style="width: 100%; height: 103px; background-image: url('<?php echo base_url();?>assets/images/user.png'); background-size: cover; background-repeat: no-repeat; border-radius: 0px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cell colspan3 no-padding-top no-padding-bottom">
-                           <p class="text-secondary">
-                            Anda bisa mengganti foto profile user dengan format gambar seperti .jpg dan .png
-                            </p>
-                            <div class="input-control file full-size" data-role="input">
-                                <input type="file" name="foto">
-                                <button class="button"><span class="mif-folder"></span></button>
-                            </div>
-                            <p class="text-secondary">
-                            maksimum ukuran file adalah 100 kb
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="form-actions">
@@ -60,3 +36,14 @@
         </div>
     </form>
 </div>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "profile"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>

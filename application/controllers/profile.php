@@ -16,6 +16,17 @@
 
  	}
 
+ 	public function message($mode,$caption,$text,$active)
+ 	{
+ 		//generate message
+ 		$messagesession = array(
+ 			'messagemode' => $mode,
+ 			'messagecaption' => $caption,
+ 			'messagetext' => $text,
+ 			'messageactive' => $active);
+ 		$this->session->set_flashdata($messagesession);
+ 	}
+
  	public function index()
  	{
  		if($this->input->post('saveprofile')){
@@ -23,27 +34,35 @@
  			$dataprofile = $this->input->post();
  			unset($dataprofile['saveprofile']);
 
- 			if($this->input->post('password')==""){
- 				unset($dataprofile['password']);
+ 			$namalengkap = $this->input->post('namalengkap');
+ 			$username = $this->input->post('username');	
 
+ 			if($namalengkap == "" && $username == ""){
+ 				$this->message('alert','Informasi !','Nama dan username tidak boleh kosong','profile');
  			}else{
- 				$dataprofile['password'] = md5($this->input->post('password'));
+ 				if($this->input->post('password')==""){
+ 					unset($dataprofile['password']);
+	 			}else{
+	 				$dataprofile['password'] = md5($this->input->post('password'));
+	 			}
+
+	 			$check = $this->global_model->find_by('user', array('username' => $this->session->userdata('username')));
+	 			$getid = $check['id'];
+
+	 			$this->global_model->update('user',$dataprofile,array('id' => $getid));
+
+	 			//refresh
+	 			$sql = $this->global_model->find_by('user', array('id' => $getid));
+
+	 			$sessiondata = array(
+	 					'namalengkap' => $sql['namalengkap'],
+	 					'namauser' => $sql['username'],
+	 					'emailuser' => $sql['email']);
+
+	 			$this->session->set_userdata($sessiondata);
+
+	 			$this->message('success','Informasi !','Data berhasil di ubah','profile');
  			}
-
- 			$check = $this->global_model->find_by('user', array('username' => $this->session->userdata('username')));
- 			$getid = $check['id'];
-
- 			$this->global_model->update('user',$dataprofile,array('id' => $getid));
-
- 			//refresh
- 			$sql = $this->global_model->find_by('user', array('id' => $getid));
-
- 			$sessiondata = array(
- 					'namalengkap' => $sql['namalengkap'],
- 					'namauser' => $sql['username'],
- 					'emailuser' => $sql['email']);
-
- 			$this->session->set_userdata($sessiondata);
 
  			redirect(site_url('profile'));
 
