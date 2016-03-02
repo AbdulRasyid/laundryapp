@@ -20,6 +20,7 @@
 
     <script src="<?php echo base_url();?>assets/js/metro.js"></script>
     <script src="<?php echo base_url();?>assets/js/prettify/run_prettify.js"></script>
+    <script src="<?php echo base_url();?>assets/js/select2.min.js"></script>
 
     <style>
         html, body {
@@ -49,6 +50,13 @@
             }
         }
 
+    </script>
+
+    <script>
+    $(function(){
+        $("#select").select2();
+        $("#select1").select2();
+    });
     </script>
 </head>
 <body>

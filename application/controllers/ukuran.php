@@ -121,6 +121,11 @@
 		 				unset($data['ubahukuran']);
 		 				$data['kode_ukuran'] = strtoupper($kode);
 				 		$this->global_model->update('ukuran',$data, array('kode_ukuran' => $id));
+				 		//update ke table yang relasi
+				 		$get = strtoupper($kode);
+				 		$data2 = array('kode_ukuran' => $get);
+				 		$this->global_model->update('jenis_cucian',$data2, array('kode_ukuran' => $id));
+				 		
 				 		$this->message('success','Informasi !','Data berhasil di ubah','ukuran');
 		 			}
 	 			}

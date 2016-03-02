@@ -42,7 +42,14 @@
                 </td>
                 <td id="kode"><?php echo $jeniscucian['kode_jenis'];?></td>
                 <td id="nama"><?php echo $jeniscucian['nama_jenis'];?></td>
-                <td id="ukuran"><?php echo $jeniscucian['kode_ukuran'];?></td>
+                <td id="ukuran">
+                <?php
+                    $kode = $jeniscucian['kode_ukuran'];
+                    $sql = $this->global_model->find_by('ukuran', array('kode_ukuran' =>$kode));
+                    echo $sql['nama_ukuran'];
+                ?>
+
+                </td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -69,9 +76,15 @@
             <br />
             <br />
             <label>Ukuran</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_ukuran">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
+            <div>
+                <select id="select" name="kode_ukuran" class="js-select full-size">
+                    <option></option>
+                    <?php
+                        foreach ($ukuran as $loadukuran) { 
+                    ?>
+                    <option value="<?php echo $loadukuran['kode_ukuran']?>"><?php echo $loadukuran['nama_ukuran']?></option>
+                    <?php } ?>
+                </select>
             </div>
             <br />
             <br />
@@ -101,9 +114,15 @@
             <br />
             <br />
             <label>Ukuran</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_ukuran" id="ukuran1">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
+            <div class="input-control select full-size">
+                <select name="kode_ukuran" class="full-size">
+                    <option id="ds"></option>
+                    <?php
+                        foreach ($ukuran as $loadukuran) {
+                    ?>
+                    <option value="<?php echo $loadukuran['kode_ukuran']?>"><?php echo $loadukuran['nama_ukuran']?></option>
+                    <?php } ?>
+                </select>
             </div>
             <br />
             <br />
@@ -131,7 +150,8 @@
                 var record = $(this).parents('.record');
                 //populate the editing form within the dialog
                 $('#namajenis').val(record.find('#nama').html());
-                $('#ukuran1').val(record.find('#ukuran').html());
+                $("#ds").text(record.find('#ukuran').html() + " (default)");
+                $('#ds').val('default');
                 $('#kodejenis').val(record.find('#kode').html());
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/jeniscucian/ubah/" + record.find('#kode').html());
                 //show dialog

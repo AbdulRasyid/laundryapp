@@ -29,6 +29,7 @@
 
  	public function index()
  	{
+ 		$data['ukuran'] = $this->global_model->find_all('ukuran');
  		$data['load'] = $this->global_model->find_all('jenis_cucian');
  		$this->load->view('head/dashboard');
  		$this->load->view('konten/master/jeniscucian/index',$data); //konten web
@@ -110,7 +111,7 @@
  			if($nama =="" || $kode == "" || $kodeukuran == ""){
  				$this->message('alert','Informasi !','Data tidak boleh kosong','jeniscucian');
  			}else {
- 				if($nama == $sql['nama_jenis'] && $kode == $sql['kode_jenis'] || $kodeukuran == $sql['kode_ukuran']){
+ 				if($nama == $sql['nama_jenis'] && $kode == $sql['kode_jenis'] && $kodeukuran == $sql['kode_ukuran'] || $kodeukuran == "default"){
  					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','jeniscucian');
 	 			}else{
 	 				if($sqlnama != Null && $nama != $sql['nama_jenis'] && $sqlkode != Null && $kode != $sql['kode_jenis']){
