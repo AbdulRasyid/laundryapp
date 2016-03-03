@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Rakit Harga
         <span class="place-right">
-        <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -128,7 +128,7 @@
                     <div class="cell">
                         <h5>Harga</h5>
                         <div class="input-control text full-size" data-role="input">
-                            <input type="text" name="harga" id="kodepaket" onkeypress="return isNumberKey(event)">
+                            <input type="text" name="harga" id="hargatambah" onkeypress="return isNumberKey(event)">
                             <button class="button helper-button clear"><span class="mif-cross"></span></button>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="cell">
                         <h5>Nama barang</h5>
-                        <select id="select5" name="nama_barang" id="namabarangrakit" class="js-select full-size">
+                        <select id="select5" name="nama_barang" class="js-select full-size">
                                 <?php
                                     foreach ($barang as $data) { 
                                 ?>
@@ -172,7 +172,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Jenis cucian</h5>
-                        <select id="select6" name="jenis_cucian" id="jenisrakit" class="js-select full-size">
+                        <select id="select6" name="jenis_cucian" class="js-select full-size">
                                 <?php
                                     foreach ($jeniscucian as $data) { 
                                 ?>
@@ -247,6 +247,7 @@ function isNumberKey(evt){
         var xhttp;    
         if (str == "") {
           document.getElementById("txtHint").innerHTML = "";
+          document.getElementById("koderakit").innerHTML = "";
           return;
         }
         var url="http://localhost/laundryapp/index.php/rakitharga/ajaxgenerate/"
@@ -256,6 +257,8 @@ function isNumberKey(evt){
           if (xhttp.readyState == 4 && xhttp.status == 200) {
             document.getElementById("txtHint").innerHTML = xhttp.responseText
             document.getElementById("txtHint").value = xhttp.responseText
+            document.getElementById("koderakit").innerHTML = xhttp.responseText
+            document.getElementById("koderakit").value = xhttp.responseText
           }
         };
         xhttp.open("GET",url, true);
@@ -272,19 +275,24 @@ function isNumberKey(evt){
 
                 $("#hargarakit").val(data.harga);
                 $("#koderakit").val(data.kode_rakit);
-                $("#ukuranrakit option[value="+data.kode_rakit+"]").attr('selected', true);
-                $("#namalayananrakit select").val(data.nama_layanan);
-                $("#jenisrakit select").val(data.jenis_cucian);
-                $("#namabarangrakit select").val(data.nama_barang);
-
+                $('#select7').select2("val", data.ukuran_barang);
+                $("#select4").select2("val", data.nama_layanan);
+                $("#select6").select2("val", data.jenis_cucian);
+                $("#select5").select2("val", data.nama_barang);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/rakitharga/ubah/" + record.find('#kode').html());
 
             });
-            var dialog = $("#dialogubah").data('dialog');
-            if (!dialog.element.data('opened')) {
-                dialog.open();
-            } else {
-                dialog.close();
-            }         
-        });
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+            });
+            $(".tambahbutton").click(function(event){
+                $("#txtHint").val('');
+                $("#hargatambah").val('');
+            });
+
     });
 </script>

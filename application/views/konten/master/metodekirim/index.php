@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Daftar Metode pengiriman 
         <span class="place-right">
-        <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -41,8 +41,8 @@
                     </label>
                 </td>
                 <td id="kode"><?php echo $pengiriman['kode_pengiriman'];?></td>
-                <td id="nama"><?php echo $pengiriman['nama_pengiriman'];?></td>
-                <td>Rp. <label id="harga"><?php echo $pengiriman['harga_kirim'];?></label></td>
+                <td><?php echo $pengiriman['nama_pengiriman'];?></td>
+                <td>Rp. <?php echo $pengiriman['harga_kirim'];?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -56,21 +56,21 @@
             <br />
             <label>Kode Pengiriman</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_pengiriman" maxlength="3" style="text-transform:uppercase;">
+                <input type="text" name="kode_pengiriman" id="kodetambah" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Jenis Pengiriman</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_pengiriman">
+                <input type="text" name="nama_pengiriman" id="jenistambah">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Harga Kirim</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga_kirim" onkeypress="return isNumberKey(event)">
+                <input type="text" name="harga_kirim" id="hargatambah" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -123,29 +123,6 @@
         <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
-<script type="text/javascript">
-         $(document).ready(function() {
-            var s = document.getElementById('editbutton');
-             $(".editbutton").click(function() {
-                //set which record we're editing so we can update it later
-                var record = $(this).parents('.record');
-                //populate the editing form within the dialog
-                $('#namapengiriman').val(record.find('#nama').html());
-                $('#hargakirim').val(record.find('#harga').html());
-                $('#kodepengiriman').val(record.find('#kode').html());
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/metodekirim/ubah/" + record.find('#kode').html());
-                //show dialog
-                var dialog = $("#dialogubah").data('dialog');
-                if (!dialog.element.data('opened')) {
-                    dialog.open();
-                } else {
-                    dialog.close();
-                }
-             });
-
-
-         });
-</script>
 <?php 
     if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "metodekirim"){
         echo "<script>";
@@ -164,4 +141,32 @@ function isNumberKey(evt){
         return false;
     return true;
 }    
+</script>
+<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $(".editbutton").click(function(event){
+                var record = $(this).parents('.record');
+                
+                $.getJSON('http://localhost/laundryapp/index.php/metodekirim/tampildata/'+record.find('#kode').html(), function(data) {
+
+                $('#namapengiriman').val(data.nama_pengiriman);
+                $('#hargakirim').val(data.harga_kirim);
+                $('#kodepengiriman').val(data.kode_pengiriman);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/metodekirim/ubah/" + record.find('#kode').html());
+
+            });
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+            });
+            $(".tambahbutton").click(function(event){
+                $("#kodetambah").val('');
+                $("#hargatambah").val('');
+                $("#namatambah").val('');
+            });
+
+    });
 </script>

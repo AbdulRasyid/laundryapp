@@ -143,5 +143,11 @@
  		
  	}
 
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('jenis_cucian', array('kode_jenis' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
 
  }

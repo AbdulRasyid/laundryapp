@@ -132,5 +132,10 @@
  		
  	}
 
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('layanan', array('kode_layanan' => $id));
+
+ 		echo json_encode($sql);
+ 	}
 
  }

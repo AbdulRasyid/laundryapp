@@ -88,6 +88,39 @@
  
  	}
 
+ 	function ubah($id){
+
+ 		if($this->input->post('ubahrakit')){
+ 			$data = $this->input->post();
+
+ 			$namalayanan = $this->input->post('nama_layanan');
+ 			$namabarang = $this->input->post('nama_barang');
+ 			$jeniscucian = $this->input->post('jenis_cucian');
+ 			$ukuranbarang = $this->input->post('ukuran_barang');
+ 			$koderakit = $this->input->post('kode_rakit');
+ 			$hargarakit = $this->input->post('harga');
+
+ 			$sql = $this->global_model->find_by('rakit_harga', array('kode_rakit' => $koderakit));
+
+ 			if($namalayanan == "" || $namabarang == "" || $jeniscucian == "" || $ukuranbarang == ""
+ 				|| $koderakit == "" || $hargarakit == ""){
+
+ 				$this->message('alert','Informasi !','Data tidak boleh kosong','rakitharga');
+ 			}else{
+ 				if($sql != Null && $koderakit != $sql['kode_rakit']){
+ 					$this->message('alert','Informasi !','Kode Rakit sudah ada','rakitharga');
+ 				}else{
+ 					unset($data['ubahrakit']);
+ 					$this->global_model->update('rakit_harga',$data, array('kode_rakit' => $id));
+				 	$this->message('success','Informasi !','Data berhasil di ubah','rakitharga');
+ 				}
+
+ 			}
+
+ 			redirect(site_url('rakitharga'));
+ 		}
+ 	}
+
  	function ajaxgenerate($id){
 
  		/*generate kode barang*/

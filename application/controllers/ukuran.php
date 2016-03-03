@@ -135,4 +135,12 @@
  		}
  		
  	}
+
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('ukuran', array('kode_ukuran' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
+
  }

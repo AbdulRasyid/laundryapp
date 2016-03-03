@@ -134,4 +134,10 @@
  		}
  		
  	}
+
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $id));
+
+ 		echo json_encode($sql);
+ 	}
  }
