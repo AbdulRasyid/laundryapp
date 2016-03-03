@@ -45,8 +45,8 @@
  			$kode = $this->input->post('kode_pengiriman');
  			$harga = $this->input->post('harga_kirim');
 
- 			$sqlnama = $this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama));
- 			$sqlkode = $this->global_model->find_by('pengiriman', array('kode_pengiriman' => $kode));
+ 			$sqlnama = count($this->global_model->find_by('pengiriman', array('nama_pengiriman' => $nama)));
+ 			$sqlkode = count($this->global_model->find_by('pengiriman', array('kode_pengiriman' => $kode)));
 
  			if($kode == "" || $nama == "" || $harga == ""){
  				$this->message('alert','Informasi !','Data tidak boleh kosong','metodekirim');
@@ -54,7 +54,7 @@
  				if($sqlnama > 0 && $sqlkode > 0){
  					$this->message('alert','Informasi !','Kode dan Jenis pengiriman sudah ada','metodekirim');
  				}else if($sqlkode > 0){
- 					$this->message('alert','Informasi !','Kode pengiriman sudah ada');
+ 					$this->message('alert','Informasi !','Kode pengiriman sudah ada', 'metodekirim');
  				}else if($sqlnama > 0) {
  					$this->message('alert','Informasi !','Jenis pengiriman sudah ada','metodekirim');
  				}else{

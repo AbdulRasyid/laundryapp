@@ -120,5 +120,11 @@
 
  	}
 
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('rakit_harga', array('kode_rakit' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
 
  }

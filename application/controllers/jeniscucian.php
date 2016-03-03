@@ -55,9 +55,9 @@
  				if($sqlnama > 0 && $sqlkode > 0){
  					$this->message('alert','Informasi !','Nama dan Kode jenis sudah ada','jeniscucian');
  				}else if($sqlkode > 0){
- 					$this->message('alert','Informasi !','Nama jenis sudah ada','jeniscucian');
+ 					$this->message('alert','Informasi !','kode jenis sudah ada','jeniscucian');
  				}else if($sqlnama > 0) {
- 					$this->message('alert','Informasi !','Kode jenis sudah ada','jeniscucian');
+ 					$this->message('alert','Informasi !','Nama jenis sudah ada','jeniscucian');
  				}else{
  					unset($data['simpanjeniscucian']);
  					$data['kode_jenis'] = strtoupper($kode);

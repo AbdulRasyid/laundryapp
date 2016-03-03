@@ -58,13 +58,11 @@
         $("#select1").select2();
         $("#select2").select2();
         $("#select3").select2();
+        $("#select4").select2();
+        $("#select5").select2();
+        $("#select6").select2();
+        $("#select7").select2();
     });
-    </script>
-    <script type="text/javascript">
-       $(function(){
-        $("#select2").select2();
-        $("#select3").select2();
-    }); 
     </script>
 </head>
 <body>

@@ -55,7 +55,7 @@
  				if($sqlnama > 0 && $sqlkode > 0){
  					$this->message('alert','Informasi !','Kode dan Nama paket sudah ada','paket');
  				}else if($sqlkode > 0){
- 					$this->message('alert','Informasi !','Kode paket sudah ada');
+ 					$this->message('alert','Informasi !','Kode paket sudah ada','paket');
  				}else if($sqlnama > 0) {
  					$this->message('alert','Informasi !','Nama paket sudah ada','paket');
  				}else{

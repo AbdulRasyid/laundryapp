@@ -40,7 +40,7 @@
                     </label>
                 </td>
                 <td id="kode"><?php echo $data['kode_rakit'];?></td>
-                <td id="nama">
+                <td>
                 <?php 
                     $kode = $data['nama_layanan'];
                     $sql = $this->global_model->find_by('layanan',array('kode_layanan' => $kode));
@@ -148,62 +148,60 @@
             <div class="grid">
                 <div class="row cells2">
                     <div class="cell">
-                        <label>Nama Layanan</label>
-                        <div>
-                            <select id="select" name="nama_layanan" class="js-select full-size">
+                        <h5>Nama layanan</h5>
+                        <select id="select4" name="nama_layanan" id="namalayananrakit" class="js-select full-size" onChange="showKodeRakit(this.value)">
                                 <?php
                                     foreach ($layanan as $data) { 
                                 ?>
                                 <option value="<?php echo $data['kode_layanan']?>"><?php echo $data['nama_layanan']?></option>
                                 <?php } ?>
-                            </select>
-                        </div>
+                        </select>
+                        
                     </div>
                     <div class="cell">
-                        <label>Nama barang</label>
-                        <div class="input-control text full-size" data-role="input">
-                            <input type="text" name="nama_barang" id="kodepaket">
-                            <button class="button helper-button clear"><span class="mif-cross"></span></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row cells2">
-                    <div class="cell">
-                        <label>Kode rakit</label>
-                        <div class="input-control text full-size">
-                            <input type="text" name="kode_rakit" id="kodepaket" readonly>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <label>Ukuran barang</label>
-                        <div>
-                            <select id="select1" name="ukuran_barang" class="js-select full-size">
+                        <h5>Nama barang</h5>
+                        <select id="select5" name="nama_barang" id="namabarangrakit" class="js-select full-size">
                                 <?php
-                                    foreach ($ukuran as $data) { 
+                                    foreach ($barang as $data) { 
                                 ?>
-                                <option value="<?php echo $data['kode_ukuran']?>"><?php echo $data['nama_ukuran']?></option>
+                                <option value="<?php echo $data['kode_barang']?>"><?php echo $data['nama_barang']?></option>
                                 <?php } ?>
-                            </select>
-                        </div>
+                        </select>
                     </div>
                 </div>
                 <div class="row cells2">
                     <div class="cell">
-                        <label>Jenis Cucian</label>
-                        <div>
-                            <select id="select2" name="jenis_cucian" class="js-select full-size">
+                        <h5>Jenis cucian</h5>
+                        <select id="select6" name="jenis_cucian" id="jenisrakit" class="js-select full-size">
                                 <?php
                                     foreach ($jeniscucian as $data) { 
                                 ?>
                                 <option value="<?php echo $data['kode_jenis']?>"><?php echo $data['nama_jenis']?></option>
                                 <?php } ?>
-                            </select>
+                        </select>
+                    </div>
+                    <div class="cell">
+                        <h5>Ukuran barang</h5>
+                        <select id="select7" name="ukuran_barang" class="js-select full-size">
+                                <?php
+                                    foreach ($ukuran as $data) { 
+                                ?>
+                                <option value="<?php echo $data['kode_ukuran']?>"><?php echo $data['nama_ukuran']?></option>
+                                <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row cells2">
+                    <div class="cell">
+                        <h5>Kode Rakit</h5>
+                        <div class="input-control text full-size">
+                            <input type="text" name="kode_rakit" id="koderakit" readonly>
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Harga</label>
+                        <h5>Harga</h5>
                         <div class="input-control text full-size" data-role="input">
-                            <input type="text" name="harga" id="kodepaket" onkeypress="return isNumberKey(event)">
+                            <input type="text" name="harga" id="hargarakit" onkeypress="return isNumberKey(event)">
                             <button class="button helper-button clear"><span class="mif-cross"></span></button>
                         </div>
                     </div>
@@ -225,29 +223,6 @@
         <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
-<script type="text/javascript">
-         $(document).ready(function() {
-            var s = document.getElementById('editbutton');
-             $(".editbutton").click(function() {
-                //set which record we're editing so we can update it later
-                var record = $(this).parents('.record');
-                //populate the editing form within the dialog
-                $('#namapaket').val(record.find('#nama').html());
-                $('#kodepaket').val(record.find('#kode').html());
-                $('#waktupaket').val(record.find('#waktu').html());
-                $('#hargapaket').val(record.find('#harga').html());
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/rakitharga/ubah/" + record.find('#kode').html());
-                //show dialog
-                var dialog = $("#dialogubah").data('dialog');
-                if (!dialog.element.data('opened')) {
-                    dialog.open();
-                } else {
-                    dialog.close();
-                }
-             });
-
-         });
-</script>
 <?php 
     if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "rakitharga"){
         echo "<script>";
@@ -287,4 +262,29 @@ function isNumberKey(evt){
         xhttp.send(null);
       }
 
+</script>
+<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $(".editbutton").click(function(event){
+                var record = $(this).parents('.record');
+                
+                $.getJSON('http://localhost/laundryapp/index.php/rakitharga/tampildata/'+record.find('#kode').html(), function(data) {
+
+                $("#hargarakit").val(data.harga);
+                $("#koderakit").val(data.kode_rakit);
+                $("#ukuranrakit option[value="+data.kode_rakit+"]").attr('selected', true);
+                $("#namalayananrakit select").val(data.nama_layanan);
+                $("#jenisrakit select").val(data.jenis_cucian);
+                $("#namabarangrakit select").val(data.nama_barang);
+
+
+            });
+            var dialog = $("#dialogubah").data('dialog');
+            if (!dialog.element.data('opened')) {
+                dialog.open();
+            } else {
+                dialog.close();
+            }         
+        });
+    });
 </script>
