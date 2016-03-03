@@ -56,7 +56,15 @@
     $(function(){
         $("#select").select2();
         $("#select1").select2();
+        $("#select2").select2();
+        $("#select3").select2();
     });
+    </script>
+    <script type="text/javascript">
+       $(function(){
+        $("#select2").select2();
+        $("#select3").select2();
+    }); 
     </script>
 </head>
 <body>
