@@ -114,8 +114,6 @@
  			}else{
  				if($nama == $sql['nama_barang'] && $kode == $sql['kode_barang'] && $kategori == $sql['kode_kategori']){
  					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','barang');
-	 			}else if($nama == $sql['nama_barang'] && $kode == $sql['kode_barang'] && $kategori == "default"){
-	 				$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','barang');
 	 			}else{
 	 				if($sqlnama != Null && $nama != $sql['nama_barang'] && $sqlkode != Null && $kode != $sql['kode_barang']){
 	 					$this->message('alert','Informasi !','Kode dan Nama barang sudah ada','barang');
@@ -126,9 +124,6 @@
 		 			}else {
 		 				unset($data['ubahbarang']);
 		 				$data['kode_barang'] = strtoupper($kode);
-		 				if($kategori == "default"){
-		 					$data['kode_kategori'] = $sql['kode_kategori'];
-		 				}
 				 		$this->global_model->update('barang',$data, array('kode_barang' => $id));
 				 		$this->message('success','Informasi !','Data berhasil di ubah','barang');
 		 			}
@@ -140,4 +135,11 @@
  		}
  		
  	}
+
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('barang', array('kode_barang' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
  }

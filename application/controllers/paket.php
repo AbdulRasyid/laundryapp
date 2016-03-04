@@ -135,4 +135,10 @@
  		
  	}
 
+ 	function tampildata($id){
+ 		$sql = $this->global_model->find_by('paket_kerja', array('kode_paket' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
  }

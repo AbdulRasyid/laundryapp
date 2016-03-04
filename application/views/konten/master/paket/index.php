@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Daftar Paket Kerja
         <span class="place-right">
-        <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -42,9 +42,9 @@
                     </label>
                 </td>
                 <td id="kode"><?php echo $paket['kode_paket'];?></td>
-                <td id="nama"><?php echo $paket['nama_paket'];?></td>
-                <td><label id="waktu"><?php echo $paket['waktu'];?></label> Hari</td>
-                <td>Rp. <label id="harga"><?php echo $paket['harga'];?></td>
+                <td><?php echo $paket['nama_paket'];?></td>
+                <td><?php echo $paket['waktu'];?> Hari</td>
+                <td><?php echo $paket['harga'];?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -58,28 +58,28 @@
             <br />
             <label>Kode Paket</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_paket" maxlength="3" style="text-transform:uppercase;">
+                <input type="text" name="kode_paket" id="kodetambah" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Nama Paket</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_paket">
+                <input type="text" name="nama_paket" id="namatambah">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Waktu Kerja</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="waktu" onkeypress="return isNumberKey(event)">
+                <input type="text" name="waktu" id="waktutambah" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Harga</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="harga" onkeypress="return isNumberKey(event)">
+                <input type="text" name="harga" id="hargatambah" onkeypress="return isNumberKey(event)">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -139,29 +139,6 @@
         <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
-<script type="text/javascript">
-         $(document).ready(function() {
-            var s = document.getElementById('editbutton');
-             $(".editbutton").click(function() {
-                //set which record we're editing so we can update it later
-                var record = $(this).parents('.record');
-                //populate the editing form within the dialog
-                $('#namapaket').val(record.find('#nama').html());
-                $('#kodepaket').val(record.find('#kode').html());
-                $('#waktupaket').val(record.find('#waktu').html());
-                $('#hargapaket').val(record.find('#harga').html());
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/paket/ubah/" + record.find('#kode').html());
-                //show dialog
-                var dialog = $("#dialogubah").data('dialog');
-                if (!dialog.element.data('opened')) {
-                    dialog.open();
-                } else {
-                    dialog.close();
-                }
-             });
-
-         });
-</script>
 <?php 
     if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "paket"){
         echo "<script>";
@@ -180,4 +157,34 @@ function isNumberKey(evt){
         return false;
     return true;
 }    
+</script>
+<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $(".editbutton").click(function(event){
+                var record = $(this).parents('.record');
+                
+                $.getJSON('http://localhost/laundryapp/index.php/paket/tampildata/'+record.find('#kode').html(), function(data) {
+
+                $('#namapaket').val(data.nama_paket);
+                $('#kodepaket').val(data.kode_paket);
+                $('#waktupaket').val(data.waktu);
+                $('#hargapaket').val(data.harga);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/paket/ubah/" + record.find('#kode').html());
+
+            });
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+            });
+            $(".tambahbutton").click(function(event){
+                $("#kodetambah").val('');
+                $("#namatambah").val('');
+                $("#hargatambah").val('');
+                $("#waktutambah").val('');
+            });
+
+    });
 </script>

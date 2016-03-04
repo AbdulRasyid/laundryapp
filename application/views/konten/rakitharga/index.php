@@ -42,21 +42,21 @@
                 <td id="kode"><?php echo $data['kode_rakit'];?></td>
                 <td>
                 <?php 
-                    $kode = $data['nama_layanan'];
+                    $kode = $data['kode_layanan'];
                     $sql = $this->global_model->find_by('layanan',array('kode_layanan' => $kode));
                     echo $sql['nama_layanan'];
                 ?>
                 </td>
                 <td>
                 <?php 
-                    $kode = $data['jenis_cucian'];
+                    $kode = $data['kode_jenis'];
                     $sql = $this->global_model->find_by('jenis_cucian',array('kode_jenis' => $kode));
                     echo $sql['nama_jenis'];
                 ?>
                 </td>
                 <td>
                 <?php 
-                    $kode = $data['nama_barang'];
+                    $kode = $data['kode_barang'];
                     $sql = $this->global_model->find_by('barang',array('kode_barang' => $kode));
                     echo $sql['nama_barang'];
                 ?>
@@ -76,7 +76,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Nama layanan</h5>
-                        <select id="select" name="nama_layanan" class="js-select full-size" onChange="showKodeRakit(this.value)">
+                        <select id="select" name="kode_layanan" class="js-select full-size" onChange="showKodeRakit(this.value)">
                                 <?php
                                     foreach ($layanan as $data) { 
                                 ?>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="cell">
                         <h5>Nama barang</h5>
-                        <select id="select1" name="nama_barang" class="js-select full-size">
+                        <select id="select1" name="kode_barang" class="js-select full-size">
                                 <?php
                                     foreach ($barang as $data) { 
                                 ?>
@@ -99,7 +99,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Jenis cucian</h5>
-                        <select id="select2" name="jenis_cucian" class="js-select full-size">
+                        <select id="select2" name="kode_jenis" class="js-select full-size">
                                 <?php
                                     foreach ($jeniscucian as $data) { 
                                 ?>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="cell">
                         <h5>Ukuran barang</h5>
-                        <select id="select3" name="ukuran_barang" class="js-select full-size">
+                        <select id="select3" name="kode_ukuran" class="js-select full-size">
                                 <?php
                                     foreach ($ukuran as $data) { 
                                 ?>
@@ -149,7 +149,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Nama layanan</h5>
-                        <select id="select4" name="nama_layanan" id="namalayananrakit" class="js-select full-size" onChange="showKodeRakit(this.value)">
+                        <select id="select4" name="kode_layanan" class="js-select full-size" onChange="showKodeRakit(this.value)">
                                 <?php
                                     foreach ($layanan as $data) { 
                                 ?>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="cell">
                         <h5>Nama barang</h5>
-                        <select id="select5" name="nama_barang" class="js-select full-size">
+                        <select id="select5" name="kode_barang" class="js-select full-size">
                                 <?php
                                     foreach ($barang as $data) { 
                                 ?>
@@ -172,7 +172,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Jenis cucian</h5>
-                        <select id="select6" name="jenis_cucian" class="js-select full-size">
+                        <select id="select6" name="kode_jenis" class="js-select full-size">
                                 <?php
                                     foreach ($jeniscucian as $data) { 
                                 ?>
@@ -182,7 +182,7 @@
                     </div>
                     <div class="cell">
                         <h5>Ukuran barang</h5>
-                        <select id="select7" name="ukuran_barang" class="js-select full-size">
+                        <select id="select7" name="kode_ukuran" class="js-select full-size">
                                 <?php
                                     foreach ($ukuran as $data) { 
                                 ?>
@@ -275,10 +275,10 @@ function isNumberKey(evt){
 
                 $("#hargarakit").val(data.harga);
                 $("#koderakit").val(data.kode_rakit);
-                $('#select7').select2("val", data.ukuran_barang);
-                $("#select4").select2("val", data.nama_layanan);
-                $("#select6").select2("val", data.jenis_cucian);
-                $("#select5").select2("val", data.nama_barang);
+                $('#select7').select2("val", data.kode_ukuran);
+                $("#select4").select2("val", data.kode_layanan);
+                $("#select6").select2("val", data.kode_jenis);
+                $("#select5").select2("val", data.kode_barang);
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/rakitharga/ubah/" + record.find('#kode').html());
 
             });

@@ -113,8 +113,6 @@
  			}else {
  				if($nama == $sql['nama_jenis'] && $kode == $sql['kode_jenis'] && $kodeukuran == $sql['kode_ukuran']){
  					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','jeniscucian');
-	 			}else if($nama == $sql['nama_jenis'] && $kode == $sql['kode_jenis'] && $kodeukuran == "default"){
-	 				$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','jeniscucian');
 	 			}else{
 	 				if($sqlnama != Null && $nama != $sql['nama_jenis'] && $sqlkode != Null && $kode != $sql['kode_jenis']){
 	 					$this->message('alert','Informasi !','Nama dan Kode jenis sudah ada','jeniscucian');
@@ -128,9 +126,6 @@
 		 			}else {
 		 				unset($data['ubahjeniscucian']);
 		 				$data['kode_jenis'] = strtoupper($kode);
-		 				if($kodeukuran == "default"){
-		 					$data['kode_ukuran'] = $sql['kode_ukuran'];
-		 				}
 				 		$this->global_model->update('jenis_cucian',$data, array('kode_jenis' => $id));
 				 		$this->message('success','Informasi !','Data berhasil di ubah','jeniscucian');
 		 			}

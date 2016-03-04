@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Daftar Barang
         <span class="place-right">
-        <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -41,8 +41,8 @@
                     </label>
                 </td>
                 <td id="kode"><?php echo $barang['kode_barang'];?></td>
-                <td id="nama"><?php echo $barang['nama_barang'];?></td>
-                <td id="kategori">
+                <td><?php echo $barang['nama_barang'];?></td>
+                <td>
                     <?php 
                         $kode = $barang['kode_kategori'];
                         $sql = $this->global_model->find_by('kategori_barang', array('kode_kategori' =>$kode));
@@ -62,14 +62,14 @@
             <br />
             <label>Kode Barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_barang" maxlength="3" style="text-transform:uppercase;">
+                <input type="text" name="kode_barang" maxlength="3" id="kodetambah" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Nama Barang</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_barang">
+                <input type="text" name="nama_barang" id="namatambah">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -112,9 +112,8 @@
             <br />
             <br />
             <label>Kategori Barang</label>
-            <div class="input-control select full-size">
-                <select name="kode_kategori" class="full-size">
-                    <option id="ds"></option>
+            <div>
+                <select id="select5" name="kode_kategori" class="js-select full-size">
                     <?php
                         foreach ($kategori as $kategoridata) {
                     ?>
@@ -140,31 +139,6 @@
         <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
-<script type="text/javascript">
-         $(document).ready(function() {
-            var s = document.getElementById('editbutton');
-             $(".editbutton").click(function() {
-                //set which record we're editing so we can update it later
-                var record = $(this).parents('.record');
-                //populate the editing form within the dialog
-                $('#kodebarang').val(record.find('#kode').html());
-                $('#namabarang').val(record.find('#nama').html());
-                $('#kodekategori').val(record.find('#kategori').html());
-                $("#ds").text(record.find('#kategori').html() + " (default)");
-                $('#ds').val('default');
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/barang/ubah/" + record.find('#kode').html());
-                //show dialog
-                var dialog = $("#dialogubah").data('dialog');
-                if (!dialog.element.data('opened')) {
-                    dialog.open();
-                } else {
-                    dialog.close();
-                }
-             });
-
-
-         });
-</script>
 <?php 
     if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "barang"){
         echo "<script>";
@@ -176,3 +150,30 @@
         echo "</script>";
     }
 ?>
+<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $(".editbutton").click(function(event){
+                var record = $(this).parents('.record');
+                
+                $.getJSON('http://localhost/laundryapp/index.php/barang/tampildata/'+record.find('#kode').html(), function(data) {
+
+                $('#kodebarang').val(data.kode_barang);
+                $('#namabarang').val(data.nama_barang);
+                $("#select5").select2("val", data.kode_kategori);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/barang/ubah/" + record.find('#kode').html());
+
+            });
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+            });
+            $(".tambahbutton").click(function(event){
+                $("#kodetambah").val('');
+                $("#namatambah").val('');
+            });
+
+    });
+</script>

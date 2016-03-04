@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Daftar Kategori Barang
         <span class="place-right">
-        <button class="button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -40,7 +40,7 @@
                     </label>
                 </td>
                 <td id="kode"><?php echo $kategoribarang['kode_kategori'];?></td>
-                <td id="nama"><?php echo $kategoribarang['nama_kategori'];?></td>
+                <td><?php echo $kategoribarang['nama_kategori'];?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -54,14 +54,14 @@
             <br />
             <label>Kode Kategori</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_kategori" maxlength="3" style="text-transform:uppercase;">
+                <input type="text" name="kode_kategori" id="kodetambah" maxlength="3" style="text-transform:uppercase;">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
             <label>Nama Kategori</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_kategori">
+                <input type="text" name="nama_kategori" id="namatambah">
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
             </div>
             <br />
@@ -107,28 +107,6 @@
         <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
     </div>
 </div>
-<script type="text/javascript">
-         $(document).ready(function() {
-            var s = document.getElementById('editbutton');
-             $(".editbutton").click(function() {
-                //set which record we're editing so we can update it later
-                var record = $(this).parents('.record');
-                //populate the editing form within the dialog
-                $('#kodekategori').val(record.find('#kode').html());
-                $('#namakategori').val(record.find('#nama').html());
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/kategoribarang/ubah/" + record.find('#kode').html());
-                //show dialog
-                var dialog = $("#dialogubah").data('dialog');
-                if (!dialog.element.data('opened')) {
-                    dialog.open();
-                } else {
-                    dialog.close();
-                }
-             });
-
-
-         });
-</script>
 <?php 
     if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "kategoribarang"){
         echo "<script>";
@@ -140,3 +118,29 @@
         echo "</script>";
     }
 ?>
+<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $(".editbutton").click(function(event){
+                var record = $(this).parents('.record');
+                
+                $.getJSON('http://localhost/laundryapp/index.php/kategoribarang/tampildata/'+record.find('#kode').html(), function(data) {
+
+                $('#kodekategori').val(data.kode_kategori);
+                $('#namakategori').val(data.nama_kategori);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/kategoribarang/ubah/" + record.find('#kode').html());
+
+            });
+                var dialog = $("#dialogubah").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                }
+            });
+            $(".tambahbutton").click(function(event){
+                $("#namatambah").val('');
+                $("#kodetambah").val('');
+            });
+
+    });
+</script>

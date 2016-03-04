@@ -156,6 +156,25 @@
  	function tampildata($id){
  		$sql = $this->global_model->find_by('rakit_harga', array('kode_rakit' => $id));
 
+ 		$kodelayanan = $sql['kode_layanan'];
+ 		$kodejenis = $sql['kode_jenis'];
+ 		$kodebarang = $sql['kode_barang'];
+ 		$kodeukuran = $sql['kode_ukuran'];
+
+
+ 		$layanan = $this->global_model->find_by('layanan', array('kode_layanan' => $kodelayanan));
+ 		$jenis = $this->global_model->find_by('jenis_cucian', array('kode_jenis' => $kodejenis));
+ 		$barang = $this->global_model->find_by('barang', array('kode_barang' => $kodebarang));
+ 		$ukuran = $this->global_model->find_by('ukuran', array('kode_ukuran' => $kodeukuran));
+
+ 		$data = array(
+ 			'kode_rakit' => $sql['kode_rakit'],
+ 			'kode_layanan' => $layanan['nama_layanan'],
+ 			'kode_jenis' => $jenis['nama_jenis'],
+ 			'kode_barang' => $barang['nama_barang'],
+ 			'kode_ukuran' => $ukuran['nama_ukuran'],
+ 			'harga' => $sql['harga']);
+
  		echo json_encode($sql);
  	}
 
