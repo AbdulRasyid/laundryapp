@@ -149,7 +149,7 @@
                 <div class="row cells2">
                     <div class="cell">
                         <h5>Nama layanan</h5>
-                        <select id="select4" name="kode_layanan" class="js-select full-size" onChange="showKodeRakit(this.value)">
+                        <select id="select4" name="kode_layanan" class="js-select full-size">
                                 <?php
                                     foreach ($layanan as $data) { 
                                 ?>
@@ -279,6 +279,7 @@ function isNumberKey(evt){
                 $("#select4").select2("val", data.kode_layanan);
                 $("#select6").select2("val", data.kode_jenis);
                 $("#select5").select2("val", data.kode_barang);
+                $('#select4').attr( 'onChange', 'showKodeRakit(this.value)' );
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/rakitharga/ubah/" + record.find('#kode').html());
 
             });
