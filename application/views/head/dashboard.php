@@ -78,6 +78,7 @@
                     <li><a href="<?php echo base_url();?>index.php/metodekirim">Daftar Metode pengiriman</a></li>
                     <li><a href="<?php echo base_url();?>index.php/jeniscucian">Daftar Jenis cucian</a></li>
                     <li><a href="<?php echo base_url();?>index.php/ukuran">Daftar Ukuran</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/ukuranbenda">Daftar Ukuran benda</a></li>
                     <li><a href="<?php echo base_url();?>index.php/paket">Daftar Paket kerja</a></li>
                     <li><a href="<?php echo base_url();?>index.php/kategoribarang">Daftar Kategori barang</a></li>
                     <li><a href="<?php echo base_url();?>index.php/barang">Daftar Barang</a></li>
