@@ -29,8 +29,6 @@
 
  	public function index()
  	{
- 		$data['kirim'] = $this->global_model->find_all('pengiriman');
- 		$data['paket'] = $this->global_model->find_all('paket_kerja');
  		$data['load'] = $this->global_model->find_all('pelanggan');
  		$this->load->view('head/dashboard');
  		$this->load->view('konten/cucian/index', $data); //konten web
@@ -38,6 +36,11 @@
  	}
 
  	public function tambah(){
+ 		$data['layanan'] = $this->global_model->find_all('layanan');
+ 		$data['barang'] = $this->global_model->find_all('barang');
+ 		$data['jeniscucian'] = $this->global_model->find_all('jenis_cucian');
+ 		$data['kategori'] = $this->global_model->find_all('kategori_barang');
+ 		$data['ukuran'] = $this->global_model->find_all('ukuran_benda');
  		$data['kirim'] = $this->global_model->find_all('pengiriman');
  		$data['paket'] = $this->global_model->find_all('paket_kerja');
  		$this->load->view('head/dashboard');

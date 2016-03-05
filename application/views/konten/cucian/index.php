@@ -1,7 +1,7 @@
 <div class="cell auto-size padding20 bg-white">
     <h1 class="text-light">Cucian
         <span class="place-right">
-        <button class="tambahbutton button primary small-button" onclick="showDialog('dialogtambah')"><span class="mif-plus"></span></button>
+        <a class="mif-plus button primary small-button" href="<?php echo base_url();?>index.php/cucian/tambah"></a>
         <button class="button danger small-button" onclick="showDialog('dialoghapus')"><span class="mif-bin"></span></button>
         </span>
     </h1>
@@ -50,79 +50,6 @@
         </tbody>
     </table>
     </form>
-    <div data-role="dialog" id="dialogtambah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
-        <form method="post" action="<?php echo base_url();?>index.php/rakitharga/tambah">
-            <h1 class="text-light">Tambah data</h1>
-            <hr class="thin bg-grayLighter">
-            <br />
-            <div class="grid">
-                <div class="row cells2">
-                    <div class="cell">
-                        <div class="row cells2">
-                            <div class="cell">
-                                <h5>Nama pelanggan</h5>
-                                <div class="input-control text full-size">
-                                    <input type="text" name="kode_rakit" id="txtHint" readonly>
-                                </div>
-                                
-                            </div>
-                            <div class="cell">
-                                <h5>Nomor Telepon</h5>
-                                <div class="input-control text full-size">
-                                    <input type="text" name="kode_rakit" id="txtHint" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="cell">
-                                <h5>Alamat Rumah</h5>
-                                <div class="input-control text full-size">
-                                    <input type="text" name="kode_rakit" id="txtHint" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row cells2">
-                            <div class="cell">
-                                <h5>Metode Pengiriman</h5>
-                                <select id="select" name="kode_layanan" class="js-select full-size">
-                                    <?php
-                                        foreach ($kirim as $data) { 
-                                    ?>
-                                    <option value="<?php echo $data['kode_pengiriman']?>"><?php echo $data['nama_pengiriman']?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="cell">
-                                <h5>Paket Kerja</h5>
-                                <select id="select1" name="kode_layanan" class="js-select full-size">
-                                        <?php
-                                            foreach ($paket as $data) { 
-                                        ?>
-                                        <option value="<?php echo $data['kode_paket']?>"><?php echo $data['nama_paket']?></option>
-                                        <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <h5>Paket Kerja</h5>
-                                <select id="select1" name="kode_layanan" class="js-select full-size">
-                                        <?php
-                                            foreach ($paket as $data) { 
-                                        ?>
-                                        <option value="<?php echo $data['kode_paket']?>"><?php echo $data['nama_paket']?></option>
-                                        <?php } ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <hr class="thin bg-grayLighter">
-            <div class="form-actions place-right">
-                <input type="reset" class="button" value="Batalkan" />
-                <input type="submit" class="button primary" name="simpanrakit" value="Simpan" />
-            </div>
-        </form>
-    </div>
     <div data-role="dialog" id="dialoghapus" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
         <h1>Hapus data</h1>
         <hr class="thin bg-grayLighter">
