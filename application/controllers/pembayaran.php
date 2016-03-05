@@ -1,5 +1,5 @@
 <?php if (! defined('BASEPATH')) exit('No direct script acces allowed');
- class Pelanggan extends CI_Controller {
+ class Pembayaran extends CI_Controller {
 
  	function __construct()
  	{
@@ -19,7 +19,7 @@
  	public function index()
  	{
  		$this->load->view('head/dashboard');
- 		$this->load->view('konten/pelanggan/index'); //konten web
+ 		$this->load->view('konten/pembayaran/index'); //konten web
  		$this->load->view('footer/dashboard');
  	}
  }

@@ -86,8 +86,8 @@
                     <li><a href="<?php echo base_url();?>index.php/rakitharga">Rakit Harga cucian</a></li>
                 </ul>
             </li>
-            <li><a href="<?php echo base_url();?>index.php/pelanggan">Pelanggan</a></li>
-            <li><a href="<?php echo base_url();?>index.php/status">Status</a></li>
+            <li><a href="<?php echo base_url();?>index.php/cucian">Cucian</a></li>
+            <li><a href="<?php echo base_url();?>index.php/pembayaran">Pembayaran</a></li>
         </ul>
 
         <div class="app-bar-element place-right">
