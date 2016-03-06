@@ -36,10 +36,100 @@
  	}
 
  	public function tambah(){
+ 		$savebutton = $this->input->post('simpancucian');
+
+ 		if($savebutton){
+
+ 			$namapelanggan = $this->input->post('nama_pelanggan');
+ 			$notelepon = $this->input->post('no_telepon');
+ 			$alamat = $this->input->post('alamat');
+
+ 			$kode_resi = mt_rand(100000,999999);
+ 			$tanggaldaftar = date_create()->format('Y-m-d H:i:s');
+
+ 			//data pelanggan
+ 			$inputpelanggan = array(
+ 				'nama_pelanggan' => $this->input->post('nama_pelanggan'),
+ 				'no_telepon' => $this->input->post('no_telepon'),
+ 				'alamat' => $this->input->post('alamat'),
+ 				'status' => "pending",
+ 				'tanggal_daftar' => $tanggaldaftar,
+ 				'kode_pengiriman' => $this->input->post('kode_pengiriman'),
+ 				'kode_paket' => $this->input->post('kode_paket'),
+ 				'kode_resi' => $kode_resi);
+
+ 			//untuk list item
+ 			$check = $this->input->post('check');
+ 			$kodelayanan = $this->input->post('kode_layanan');
+ 			$kodejenis = $this->input->post('kode_jenis');
+ 			$kodebarang = $this->input->post('kode_barang');
+ 			$kodeukuran = $this->input->post('kode_ukuran');
+ 			$qty = $this->input->post('qty');
+
+
+ 			if($namapelanggan == "" || $notelepon == "" || $alamat == ""){
+ 				$this->message('alert','Informasi !','Nama, No telepon, dan Alamat pelanggan tidak boleh kosong','tambahcucian');
+ 			}else{
+ 				if(is_array($check)){
+
+ 					unset($savebutton);
+	 				//simpan ke table pelanggan
+	 				$this->global_model->create('pelanggan', $inputpelanggan);
+
+	 				 //simpan ke table list item
+					 for($i = 0; $i < count($check); $i++){
+						$number[$i] = (int) $check[$i] - 1;
+						
+					 }
+					 foreach($number as $nilai => $hasil){
+
+					 	$cari = array(
+					 		'kode_barang' => $kodebarang[$hasil],
+	  						'kode_layanan' => $kodelayanan[$hasil],
+	  						'kode_jenis' => $kodejenis[$hasil],
+	  						'kode_ukuran' => $kodeukuran[$hasil]);
+
+					 	$sql = $this->global_model->find_by('rakit_harga', $cari);
+
+					 	$hargabiasa = (int) $sql['harga'];
+					 	$totalharga = (int) $qty[$hasil] * $hargabiasa;
+
+					 	$datadetail = array(
+					 		'kode_resi' => $kode_resi,
+	  						'kode_barang' => $kodebarang[$hasil],
+	  						'kode_layanan' => $kodelayanan[$hasil],
+	  						'kode_jenis' => $kodejenis[$hasil],
+	  						'kode_ukuran' => $kodeukuran[$hasil],
+	  						'qty' => $qty[$hasil],
+	  						'harga' => $totalharga);
+						
+						$this->global_model->create('list_cucian',$datadetail);
+					 }
+
+					 /*simpan ke pembayaran
+					 $pembayaran = array(
+					 		'kode_resi' => $kode_resi,
+	  						'harga_total' => $totalharga);
+
+					 $this->global_model->create('pembayaran',$pembayaran);*/
+
+					 $this->message('success','Informasi !','Data berhasil di tambah','tambahcucian');
+						
+					}else if(empty($validasi)){
+						$this->message('alert','Informasi !','List item tidak boleh kosong','tambahcucian');
+				}
+
+
+
+ 			}
+
+ 			redirect(site_url('cucian/tambah'));
+
+ 		}
+
  		$data['layanan'] = $this->global_model->find_all('layanan');
  		$data['barang'] = $this->global_model->find_all('barang');
- 		$data['jeniscucian'] = $this->global_model->find_all('jenis_cucian');
- 		$data['kategori'] = $this->global_model->find_all('kategori_barang');
+ 		$data['jeniscucian'] = $this->global_model->find_all('jenis_cucian'); 		
  		$data['ukuran'] = $this->global_model->find_all('ukuran_benda');
  		$data['kirim'] = $this->global_model->find_all('pengiriman');
  		$data['paket'] = $this->global_model->find_all('paket_kerja');

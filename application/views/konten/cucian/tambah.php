@@ -11,26 +11,26 @@
         <li><a href="#">Tambah data</a></li>
     </ul>
     <hr class="thin bg-grayLighter">
-    <form method="post">
+    <form method="post" action="">
     <div class="grid">
         <div class="row cells2">
             <div class="cell">
                 <label>Nama Pelanggan</label>
                 <div class="input-control text full-size">
-                    <input type="text" name="nama_pelanggan" placeholder="Nama lengkap">
+                    <input type="text" name="nama_pelanggan" placeholder="Nama pelanggan">
                 </div>
             </div>
             <div class="cell">
                 <label>No telepon</label>
                 <div class="input-control text full-size">
-                    <input type="text" name="no_telepon" placeholder="Nama lengkap">
+                    <input type="text" name="no_telepon" placeholder="No Telepon">
                 </div>
             </div>
         </div>
         <div class="row cells2">
             <div class="cell">
                 <label>Metode Pengiriman</label>
-                <select id="select" name="kode_layanan" class="js-select full-size">
+                <select id="select" name="kode_pengiriman" class="js-select full-size">
                     <?php
                     foreach ($kirim as $data) { 
                     ?>
@@ -40,7 +40,7 @@
             </div>
             <div class="cell">
                 <label>Paket Kerja</label>
-                <select id="select2" name="kode_layanan" class="js-select full-size">
+                <select id="select2" name="kode_paket" class="js-select full-size">
                     <?php
                     foreach ($paket as $data) { 
                     ?>
@@ -53,7 +53,7 @@
             <div class="cell">
                 <label>Alamat</label>
                 <div class="input-control text full-size">
-                    <input type="text" name="namalengkap" placeholder="Nama lengkap">
+                    <input type="text" name="alamat" placeholder="Alamat Rumah">
                 </div>
             </div>
         </div>
@@ -72,7 +72,6 @@
             </td>
             <td>Nama Layanan</td>
             <td>Jenis Cucian</td>
-            <td>Kategori Barang</td>
             <td>Nama barang</td>
             <td>Ukuran Barang</td>
             <td>Qty</td>
@@ -105,17 +104,6 @@
             </td>
             <td>
             <div class="input-control select full-size">
-                <select name="kode_kategori[]">
-                    <?php
-                    foreach ($kategori as $data) { 
-                    ?>
-                    <option value="<?php echo $data['kode_kategori']?>"><?php echo $data['nama_kategori']?></option>
-                    <?php } ?>
-                </select>
-            </div>
-            </td>
-            <td>
-            <div class="input-control select full-size">
                 <select name="kode_barang[]">
                     <?php
                     foreach ($barang as $data) { 
@@ -138,12 +126,18 @@
             </td>
             <td style="width: 100px">
                 <div class="input-control text full-size">
-                    <input type="text" name="qty[]" placeholder="qty">
+                    <input type="text" name="qty[]" placeholder="qty" style="width: 100px">
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
+    <hr class="thin bg-grayLighter">
+    <div class="form-actions place-right">
+        <input type="reset" class="button" value="Batalkan" />
+        <input type="submit" class="button primary" name="simpancucian" value="Simpan" />
+        <br><br>
+    </div>
     </form>
 </div>
 <script language="javascript">
@@ -189,7 +183,7 @@
                 row.cells[0].childNodes[0].value = i;
                 if(null != chkbox && true == chkbox.checked) {
                     if(rowCount <= 2) {
-                        alert("Cannot delete all the rows.");
+                        alert("Tidak bisa menghapus semua baris.");
                         break;
                     }
                     table.deleteRow(i);
@@ -205,3 +199,15 @@
         }
  
     </script>
+<?php 
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "tambahcucian"){
+        echo "<script>";
+        echo "$(document).ready(function() {";
+            echo "setTimeout(function(){";
+                echo "$.Notify({type: '".$this->session->flashdata('messagemode')."', caption: '".$this->session->flashdata('messagecaption')."', content: '".$this->session->flashdata('messagetext')."'});";
+            echo "}, 500);";
+        echo "});";
+        echo "</script>";
+    }
+?>
+<script>
