@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 06, 2016 at 06:37 
+-- Generation Time: Mar 06, 2016 at 08:18 
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -124,7 +124,7 @@ CREATE TABLE `list_cucian` (
 --
 
 INSERT INTO `list_cucian` (`id`, `kode_resi`, `kode_barang`, `kode_layanan`, `kode_jenis`, `kode_ukuran`, `qty`, `harga`) VALUES
-(1, '321375', 'ALL', 'CBS', 'KLN', 'ALL', 2, 14000);
+(4, '264262', 'ALL', 'CBS', 'KLN', 'ALL', 2, 14000);
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE `paket_kerja` (
 
 INSERT INTO `paket_kerja` (`kode_paket`, `nama_paket`, `waktu`, `harga`) VALUES
 ('ISW', 'Istimewa', 1, '3000'),
-('RGR', 'Reguler', 3, '2000');
+('RGR', 'Reguler', 3, '0');
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,7 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id`, `nama_pelanggan`, `no_telepon`, `alamat`, `kode_resi`, `status`, `tanggal_daftar`, `tanggal_ambil`, `kode_pengiriman`, `kode_paket`) VALUES
-(1, 'andik', '08972321372', 'Condet batu ampar', '321375', 'pending', '2016-03-06 06:34:28', NULL, 'AJT', 'ISW');
+(4, 'Abdul Zakir', '12312323', 'kfdsjfkdjfd', '264262', 'pending', '2016-03-06 07:20:27', NULL, 'AJT', 'ISW');
 
 -- --------------------------------------------------------
 
@@ -187,6 +187,13 @@ CREATE TABLE `pembayaran` (
   `tanggal_bayar` datetime DEFAULT NULL,
   `uang_kembali` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id`, `kode_resi`, `harga_total`, `user_bayar`, `tanggal_bayar`, `uang_kembali`) VALUES
+(1, '264262', 21000, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -391,17 +398,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `list_cucian`
 --
 ALTER TABLE `list_cucian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user`
 --
