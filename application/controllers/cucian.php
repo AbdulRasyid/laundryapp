@@ -45,7 +45,7 @@
  			$alamat = $this->input->post('alamat');
 
  			$kode_resi = mt_rand(100000,999999);
- 			$tanggaldaftar = date_create()->format('Y-m-d H:i:s');
+ 			$date = date("Y-m-d H:i:s",strtotime($date));
 
  			//data pelanggan
  			$inputpelanggan = array(
@@ -53,7 +53,7 @@
  				'no_telepon' => $this->input->post('no_telepon'),
  				'alamat' => $this->input->post('alamat'),
  				'status' => "pending",
- 				'tanggal_daftar' => $tanggaldaftar,
+ 				'tanggal_daftar' => $date,
  				'kode_pengiriman' => $this->input->post('kode_pengiriman'),
  				'kode_paket' => $this->input->post('kode_paket'),
  				'kode_resi' => $kode_resi);
@@ -119,7 +119,8 @@
 
 					 $pembayaran = array(
 					 		'kode_resi' => $kode_resi,
-	  						'harga_total' => $row->jumlah);
+	  						'harga_total' => $row->jumlah,
+	  						'nama_pelanggan' => $namapelanggan);
 
 					 $this->global_model->create('pembayaran',$pembayaran);
 

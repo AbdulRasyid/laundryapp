@@ -23,7 +23,7 @@
             <div class="cell">
                 <label>No telepon</label>
                 <div class="input-control text full-size">
-                    <input type="text" name="no_telepon" placeholder="No Telepon">
+                    <input type="text" name="no_telepon" placeholder="No Telepon" onkeypress="return isNumberKey(event)">
                 </div>
             </div>
         </div>
@@ -126,7 +126,7 @@
             </td>
             <td style="width: 100px">
                 <div class="input-control text full-size">
-                    <input type="text" name="qty[]" placeholder="qty" style="width: 100px">
+                    <input type="text" name="qty[]" placeholder="qty" style="width: 100px" onkeypress="return isNumberKey(event)">
                 </div>
             </td>
         </tr>
@@ -211,3 +211,10 @@
     }
 ?>
 <script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}    
+</script>

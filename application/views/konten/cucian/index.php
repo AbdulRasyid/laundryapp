@@ -42,7 +42,7 @@
                 </td>
                 <td id="kode"><?php echo $cucian['kode_resi'];?></td>
                 <td><?php echo $cucian['nama_pelanggan'];?></td>
-                <td><?php echo $cucian['no_telepon'];?> Hari</td>
+                <td><?php echo $cucian['no_telepon'];?></td>
                 <td><?php echo $cucian['status'];?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
@@ -71,4 +71,3 @@
         echo "</script>";
     }
 ?>
-<script>
