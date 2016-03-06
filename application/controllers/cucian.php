@@ -106,12 +106,22 @@
 						$this->global_model->create('list_cucian',$datadetail);
 					 }
 
-					 /*simpan ke pembayaran
+					 //simpan ke pembayaran
+					 $sqlquery = "select nama_pelanggan,pelanggan.kode_resi,list_cucian.harga,paket_kerja.harga,
+					 pengiriman.harga_kirim,sum(pengiriman.harga_kirim + paket_kerja.harga + list_cucian.harga) as jumlah 
+					 from pelanggan inner join pengiriman on pelanggan.kode_pengiriman = pengiriman.kode_pengiriman inner join 
+					 paket_kerja on pelanggan.kode_paket = paket_kerja.kode_paket inner join list_cucian 
+					 on pelanggan.kode_resi = list_cucian.kode_resi where pelanggan.kode_resi ='$kode_resi'";
+
+					 $query = $this->db->query($sqlquery);
+
+					 $row = $query->row(); 
+
 					 $pembayaran = array(
 					 		'kode_resi' => $kode_resi,
-	  						'harga_total' => $totalharga);
+	  						'harga_total' => $row->jumlah);
 
-					 $this->global_model->create('pembayaran',$pembayaran);*/
+					 $this->global_model->create('pembayaran',$pembayaran);
 
 					 $this->message('success','Informasi !','Data berhasil di tambah','tambahcucian');
 						
@@ -157,7 +167,7 @@
 		   $this->message('info','Informasi !','Tidak ada data yang di hapus','cucian');
 		}
 
-		redirect(site_url('jeniscucian'));
+		redirect(site_url('cucian'));
  
  	}
  }
