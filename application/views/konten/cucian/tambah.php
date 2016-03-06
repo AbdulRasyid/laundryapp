@@ -183,12 +183,12 @@
             var table = document.getElementById(tableID);
             var rowCount = table.rows.length;
  
-            for(var i=0; i<rowCount; i++) {
+            for(var i=1; i<rowCount; i++) {
                 var row = table.rows[i];
                 var chkbox = row.cells[0].childNodes[0];
-                row.cells[0].childNodes[0].value = i+1;
+                row.cells[0].childNodes[0].value = i;
                 if(null != chkbox && true == chkbox.checked) {
-                    if(rowCount <= 1) {
+                    if(rowCount <= 2) {
                         alert("Cannot delete all the rows.");
                         break;
                     }
