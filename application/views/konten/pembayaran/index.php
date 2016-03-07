@@ -124,6 +124,7 @@ function hasil(){
                 $("#namapelanggan").val(data.nama_pelanggan);
                 $("#totalharga").val(data.harga_total);
                 $("#userbayar").val(data.user_bayar);
+                $("#uangkembali").val(data.uang_kembali);
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/pembayaran/ubah/" + record.find('#kode').html());
 
             });

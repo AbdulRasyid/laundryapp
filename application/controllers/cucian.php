@@ -44,8 +44,10 @@
  			$notelepon = $this->input->post('no_telepon');
  			$alamat = $this->input->post('alamat');
 
- 			$kode_resi = mt_rand(100000,999999);
- 			$date = date("Y-m-d H:i:s",strtotime($date));
+ 			date_default_timezone_set('Asia/Jakarta');
+ 			$date = date('m/d/Y H:i:s',time());
+
+ 			$kode_resi = mt_rand(100000000,999999999);
 
  			//data pelanggan
  			$inputpelanggan = array(

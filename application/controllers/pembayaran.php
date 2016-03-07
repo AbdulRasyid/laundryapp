@@ -38,7 +38,8 @@
  	function ubah($id){
  		$button = $this->input->post('ubahpembayaran');
  		if($button){
- 			$date = date("Y-m-d H:i:s",strtotime($date));
+ 			date_default_timezone_set('Asia/Jakarta');
+ 			$date = date('m/d/Y H:i:s',time());
  			$data = array(
  				'kode_resi' => $this->input->post('kode_resi'),
  				'nama_pelanggan' => $this->input->post('nama_pelanggan'),
@@ -46,10 +47,16 @@
  				'user_bayar' => $this->input->post('user_bayar'),
  				'uang_kembali' => $this->input->post('uang_kembali'),
  				'tanggal_bayar' => $date);
+
+ 			$updatepelanggan = array(
+ 				'tanggal_ambil' => $date);
  			
  			unset($button);
 
  			$this->global_model->update('pembayaran', $data, array('kode_resi' => $id));
+
+ 			$this->global_model->update('pelanggan', $updatepelanggan, array('kode_resi' => $id));
+
 
  			$this->message('success','Informasi !','Data berhasil di ubah','pembayaran');
 
