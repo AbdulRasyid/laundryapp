@@ -76,6 +76,7 @@
                 <ul class="d-menu" data-role="dropdown">
                     <li><a href="<?php echo base_url();?>index.php/layanan">Daftar Layanan</a></li>
                     <li><a href="<?php echo base_url();?>index.php/metodekirim">Daftar Metode pengiriman</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/statusdata">Daftar Status</a></li>
                     <li><a href="<?php echo base_url();?>index.php/jeniscucian">Daftar Jenis cucian</a></li>
                     <li><a href="<?php echo base_url();?>index.php/ukuran">Daftar Ukuran</a></li>
                     <li><a href="<?php echo base_url();?>index.php/ukuranbenda">Daftar Ukuran benda</a></li>
