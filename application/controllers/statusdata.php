@@ -98,6 +98,9 @@
 
  			$nama = $this->input->post('nama_status');
  			$kode = $this->input->post('kode_status');
+ 			$setting = $this->input->post('default_input');
+
+ 			$semula = array('default_input' => 'no');
 
  			$sqlnama = $this->global_model->find_by('status_data', array('nama_status' => $nama));
  			$sqlkode = $this->global_model->find_by('status_data', array('kode_status' => $kode));
@@ -108,7 +111,7 @@
  			if($kode == "" || $nama == ""){
  				$this->message('alert','Informasi !','Data tidak boleh kosong','statusdata');
  			}else{
- 				if($nama == $sql['nama_status'] && $kode == $sql['kode_status']){
+ 				if($nama == $sql['nama_status'] && $kode == $sql['kode_status'] && $setting == $sql['default_input']){
  					$this->message('info','Informasi !','Tidak ada perubahan yang terjadi','statusdata');
 	 			}else{
 	 				if($sqlnama != Null && $nama != $sql['nama_status'] && $sqlkode != Null && $kode != $sql['kode_status']){
@@ -120,6 +123,9 @@
 		 			}else {
 		 				unset($data['ubahstatus']);
 		 				$data['kode_status'] = strtoupper($kode);
+		 				//ubah record di field default_input menjadi "no"
+		 				$this->global_model->update('status_data',$semula);
+		 				//baru di update berdasarkan id yang dipilih
 				 		$this->global_model->update('status_data',$data, array('kode_status' => $id));
 				 		$this->message('success','Informasi !','Data berhasil di ubah','statusdata');
 		 			}

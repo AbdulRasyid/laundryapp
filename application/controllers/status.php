@@ -29,8 +29,8 @@
 
  	public function index()
  	{
- 		$data['load'] = $this->global_model->query("select pelanggan.kode_resi,pelanggan.nama_pelanggan, count(list_cucian.kode_resi) as banyak_item, pelanggan.status from pelanggan inner join list_cucian on pelanggan.kode_resi = list_cucian.kode_resi");
-
+ 		$data['load'] = $this->global_model->query("select pelanggan.kode_resi,pelanggan.nama_pelanggan,pelanggan.status, count(list_cucian.kode_resi) as banyak_item, pelanggan.status from pelanggan inner join list_cucian on pelanggan.kode_resi = list_cucian.kode_resi");
+ 		$data['statusdata'] = $this->global_model->find_all('status_data');
  		$this->load->view('head/dashboard');
  		$this->load->view('konten/status/index', $data); //konten web
  		$this->load->view('footer/dashboard');

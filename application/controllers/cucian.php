@@ -49,12 +49,16 @@
 
  			$kode_resi = mt_rand(100000000,999999999);
 
+ 			$sqlstatus = $this->db->query("select *from status_data where default_input!='no'");
+
+			$statusdata = $sqlstatus->row();
+
  			//data pelanggan
  			$inputpelanggan = array(
  				'nama_pelanggan' => $this->input->post('nama_pelanggan'),
  				'no_telepon' => $this->input->post('no_telepon'),
  				'alamat' => $this->input->post('alamat'),
- 				'status' => "pending",
+ 				'status' => $statusdata->kode_status,
  				'tanggal_daftar' => $date,
  				'kode_pengiriman' => $this->input->post('kode_pengiriman'),
  				'kode_paket' => $this->input->post('kode_paket'),

@@ -25,6 +25,7 @@
                 </td>
                 <td>Kode Status</td>
                 <td>Nama Status</td>
+                <td>Settingan awal Input Cucian</td>
                 <td style="width: 20px">Opsi</td>
             </tr>
         </thead>
@@ -41,6 +42,7 @@
                 </td>
                 <td id="kode"><?php echo $status['kode_status'];?></td>
                 <td><?php echo $status['nama_status'];?></td>
+                <td><?php if($status['default_input'] == "yes"){echo "iya";}else{echo "tidak";} ?></td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
@@ -66,6 +68,15 @@
             </div>
             <br />
             <br />
+            <label>Jadikan awal input cucian</label>
+            <div>
+                <select id="select" name="default_input" class="js-select full-size">
+                    <option value="yes">Iya</option>
+                    <option value="no">tidak</option>
+                </select>
+            </div>
+            <br />
+            <br />
             <div class="form-actions place-right">
                 <input type="reset" class="button" value="Batalkan" />
                 <input type="submit" class="button primary" name="simpanstatus" value="Simpan" />
@@ -88,6 +99,15 @@
             <div class="input-control text full-size" data-role="input">
                 <input type="text" name="nama_status" id="namastatus">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
+            </div>
+            <br />
+            <br />
+            <label>Jadikan awal input cucian</label>
+            <div>
+                <select id="select2" name="default_input" class="js-select full-size">
+                    <option value="yes">Iya</option>
+                    <option value="no">tidak</option>
+                </select>
             </div>
             <br />
             <br />
@@ -127,6 +147,7 @@
 
                 $('#namastatus').val(data.nama_status);
                 $('#kodestatus').val(data.kode_status);
+                $("#select2").select2("val", data.default_input);
                 $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/statusdata/ubah/" + record.find('#kode').html());
 
             });

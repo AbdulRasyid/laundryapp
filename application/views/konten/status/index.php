@@ -27,7 +27,13 @@
                 <td id="kode"><?php echo $status['kode_resi'];?></td>
                 <td><?php echo $status['nama_pelanggan'];?></td>
                 <td><?php echo $status['banyak_item'];?> item</td>
-                <td><?php echo $status['banyak_item'];?></td>
+                <td>
+                    <?php
+                     $get = $status['status'];
+                     $sql = $this->global_model->find_by('status_data', array('kode_status' => $get));
+                     echo $sql['nama_status'];
+                    ?>
+                </td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>

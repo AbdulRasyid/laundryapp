@@ -43,7 +43,13 @@
                 <td id="kode"><?php echo $cucian['kode_resi'];?></td>
                 <td><?php echo $cucian['nama_pelanggan'];?></td>
                 <td><?php echo $cucian['no_telepon'];?></td>
-                <td><?php echo $cucian['status'];?></td>
+                <td>
+                    <?php
+                     $get = $cucian['status'];
+                     $sql = $this->global_model->find_by('status_data', array('kode_status' => $get));
+                     echo $sql['nama_status'];
+                    ?>
+                </td>
                 <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
             </tr>
             <?php } ?>
