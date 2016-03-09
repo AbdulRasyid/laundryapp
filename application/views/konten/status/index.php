@@ -16,7 +16,7 @@
                 <td>Nama Pelanggan</td>
                 <td>Banyak Item</td>
                 <td>Status</td>
-                <td style="width: 20px">Opsi</td>
+                <td style="width:110px;">Opsi</td>
             </tr>
         </thead>
         <tbody>
@@ -34,53 +34,43 @@
                      echo $sql['nama_status'];
                     ?>
                 </td>
-                <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
+                <td class="text-center">
+                <button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button>
+                <button type="button" class="viewbutton  button small-button"><span class="mif-eye"></span></button>
+                </td>
             </tr>
             <?php } ?>
         </tbody>
     </table>
     </form>
-    <div data-role="dialog" id="dialogtambah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
-        <form method="post" action="<?php echo base_url();?>index.php/layanan/tambah">
-            <h1 class="text-light">Tambah data</h1>
-            <hr class="thin bg-grayLighter">
-            <br />
-            <label>Kode layanan</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_layanan" id="kodetambah" maxlength="3" style="text-transform:uppercase;">
-                <button class="button helper-button clear"><span class="mif-cross"></span></button>
-            </div>
-            <br />
-            <br />
-            <label>Nama layanan</label>
-            <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_layanan" id="namatambah">
-                <button class="button helper-button reveal"><span class="mif-cross"></span></button>
-            </div>
-            <br />
-            <br />
-            <div class="form-actions place-right">
-                <input type="reset" class="button" value="Batalkan" />
-                <input type="submit" class="button primary" name="simpanlayanan" value="Simpan" />
-            </div>
-        </form>
-    </div>
     <div data-role="dialog" id="dialogubah" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
         <form method="post" id="ubahform">
             <h1 class="text-light">Ubah data</h1>
             <hr class="thin bg-grayLighter">
             <br />
-            <label>Kode layanan</label>
+            <label>Kode Resi</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="kode_layanan" id="kodelayanan" maxlength="3" style="text-transform:uppercase;">
+                <input type="text" name="kode_resi" id="koderesi" disabled>
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br />
             <br />
-            <label>Nama layanan</label>
+            <label>Nama pelanggan</label>
             <div class="input-control text full-size" data-role="input">
-                <input type="text" name="nama_layanan" id="namalayanan">
+                <input type="text" name="nama_pelanggan" id="namapelanggan" disabled>
                 <button class="button helper-button reveal"><span class="mif-cross"></span></button>
+            </div>
+            <br />
+            <br />
+            <label>Status</label>
+            <div>
+            <select id="select" name="status" class="js-select full-size">
+                <?php
+                foreach ($statusdata as $data) { 
+                ?>
+                <option value="<?php echo $data['kode_status'];?>"><?php echo $data['nama_status'];?></option>
+                <?php } ?>
+            </select>
             </div>
             <br />
             <br />
@@ -90,18 +80,15 @@
             </div>
         </form>
     </div>
-    <div data-role="dialog" id="dialoghapus" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">
-        <h1>Hapus data</h1>
-        <hr class="thin bg-grayLighter">
-        <p>
-            Apa anda yakin ingin menghapus data ?
-        </p>
-        <hr class="thin bg-grayLighter">
-        <button type="submit" form="myform" class="button danger full-size" ><span class="icon mif-bin"></span> Lakukan</button>
+    <div data-role="dialog" id="dialogview" class="padding20" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" data-width="auto" data-height="auto">        
+            <h1 class="text-light">View Item</h1>
+            <hr class="thin bg-grayLighter">
+            <div id="tampildata">
+            </div>
     </div>
 </div>
 <?php 
-    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "layanan"){
+    if($this->session->flashdata('messagemode','messagecaption','messagetext','messageactive') && $this->session->flashdata('messageactive') == "status"){
         echo "<script>";
         echo "$(document).ready(function() {";
             echo "setTimeout(function(){";
@@ -116,13 +103,14 @@
             $(".editbutton").click(function(event){
                 var record = $(this).parents('.record');
                 
-                $.getJSON('http://localhost/laundryapp/index.php/layanan/tampildata/'+record.find('#kode').html(), function(data) {
+                $.getJSON('http://localhost/laundryapp/index.php/status/tampiluserdata/'+record.find('#kode').html(), function(data) {
 
-                $("#kodelayanan").val(data.kode_layanan);
-                $("#namalayanan").val(data.nama_layanan);
-                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/layanan/ubah/" + record.find('#kode').html());
+                $("#koderesi").val(data.kode_resi);
+                $("#namapelanggan").val(data.nama_pelanggan);
+                $("#select").select2("val", data.status);
+                $("#ubahform").attr("action", "<?php echo base_url(); ?>index.php/status/ubah/" + record.find('#kode').html());
 
-            });
+                });
                 var dialog = $("#dialogubah").data('dialog');
                 if (!dialog.element.data('opened')) {
                     dialog.open();
@@ -130,9 +118,16 @@
                     dialog.close();
                 }
             });
-            $(".tambahbutton").click(function(event){
-                $("#kodetambah").val('');
-                $("#namatambah").val('');
+
+            $(".viewbutton").click(function(event){
+                var record = $(this).parents('.record');
+                 $('#tampildata').load('http://localhost/laundryapp/index.php/status/tampildata/'+record.find('#kode').html());
+               var dialog = $("#dialogview").data('dialog');
+                if (!dialog.element.data('opened')) {
+                    dialog.open();
+                } else {
+                    dialog.close();
+                } 
             });
 
     });

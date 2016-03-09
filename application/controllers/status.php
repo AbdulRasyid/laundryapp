@@ -36,4 +36,27 @@
  		$this->load->view('footer/dashboard');
  	}
 
+ 	public function ubah($id){
+ 		$status = array('status' => $this->input->post('status'));
+
+ 		$this->global_model->update('pelanggan', $status, array('kode_resi' => $id));
+
+ 		$this->message('success','Informasi !','Data berhasil di ubah','status');
+
+ 		redirect(site_url('status'));
+
+ 	}
+
+ 	public function tampildata($id){
+
+ 		$data['load'] = $this->global_model->find_all_by('list_cucian', array('kode_resi' => $id));
+ 		$this->load->view('konten/status/listcucian', $data); //konten web
+ 	}
+
+ 	function tampiluserdata($id){
+ 		$sql = $this->global_model->find_by('pelanggan', array('kode_resi' => $id));
+
+ 		echo json_encode($sql);
+ 	}
+
  }
