@@ -67,8 +67,9 @@
 </head>
 <body>
 <header class="app-bar fixed-top" data-role="appbar">
-        <a class="app-bar-element branding"><span class="mif-shopping-basket2"></span> LaundryApps</a>
+        <a class="app-bar-element branding"><span class="mif-shopping-basket2"></span> <?php echo $dataperusahaan['namaperusahaan'];?></a>
         <span class="app-bar-divider"></span>
+        <?php if($this->session->userdata('status')== "admin"){?>
         <ul class="app-bar-menu small-dropdown">
             <li><a href="<?php echo base_url();?>index.php/dashboard"> Dashboard</a></li>
             <li>
@@ -92,12 +93,62 @@
             <li><a href="<?php echo base_url();?>index.php/status">Status</a></li>
             <li><a href="<?php echo base_url();?>index.php/user">Kelola Pengguna</a></li>
         </ul>
+        <?php }else if($this->session->userdata('status')== "OP"){?>
+        <ul class="app-bar-menu small-dropdown">
+            <li><a href="<?php echo base_url();?>index.php/dashboard"> Dashboard</a></li>
+            <li>
+                <a href="" class="dropdown-toggle">Layanan</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="<?php echo base_url();?>index.php/layanan">Daftar Layanan</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/metodekirim">Daftar Metode pengiriman</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/jeniscucian">Daftar Jenis cucian</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="" class="dropdown-toggle">Barang</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="<?php echo base_url();?>index.php/kategoribarang">Daftar Kategori barang</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/barang">Daftar Barang</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="" class="dropdown-toggle">Ukuran</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="<?php echo base_url();?>index.php/ukuran">Daftar Ukuran</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/ukuranbenda">Daftar Ukuran benda</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="" class="dropdown-toggle">Lainnya</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="<?php echo base_url();?>index.php/statusdata">Daftar Status</a></li>
+                    <li><a href="<?php echo base_url();?>index.php/rakitharga">Rakit Harga cucian</a></li>
+                </ul>
+            </li>
+
+        </ul>
+        <?php }else if($this->session->userdata('status')== "KS"){?>
+        <ul class="app-bar-menu small-dropdown">
+            <li><a href="<?php echo base_url();?>index.php/dashboard"> Dashboard</a></li>
+            <li><a href="<?php echo base_url();?>index.php/cucian">Cucian</a></li>
+            <li><a href="<?php echo base_url();?>index.php/pembayaran">Pembayaran</a></li>
+        </ul>
+        <?php }else if($this->session->userdata('status')== "PC"){?>
+        <ul class="app-bar-menu small-dropdown">
+            <li><a href="<?php echo base_url();?>index.php/dashboard"> Dashboard</a></li>
+            <li><a href="<?php echo base_url();?>index.php/status">Status Cucian</a></li>
+        </ul>
+        <?php }?>
 
         <div class="app-bar-element place-right">
             <span class="dropdown-toggle"><span class="mif-user"></span> <?php echo $this->session->userdata('namalengkap');?></span>
             <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+            <h2 class="text-light">Quick settings</h2>
                 <ul class="unstyled-list fg-dark">
                     <li><a href="<?php echo base_url();?>index.php/profile" class="fg-white1 fg-hover-yellow">Profile</a></li>
+                    <?php if($this->session->userdata('status')== "admin"){?>
+                        <li><a href="<?php echo base_url();?>index.php/settingperusahaan" class="fg-white1 fg-hover-yellow">Setting perusahaan</a></li>
+                    <?php }?>
                     <li><a href="<?php echo base_url();?>index.php/login/logout" class="fg-white3 fg-hover-yellow">Logout</a></li>
                 </ul>
             </div>

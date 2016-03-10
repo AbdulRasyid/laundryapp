@@ -30,7 +30,8 @@
  	public function index()
  	{
  		$data['load'] = $this->global_model->find_all('paket_kerja');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/master/paket/index', $data); //konten web
  		$this->load->view('footer/dashboard');
  	}

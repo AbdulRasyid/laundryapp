@@ -35,7 +35,7 @@
  			unset($dataprofile['saveprofile']);
 
  			$namalengkap = $this->input->post('namalengkap');
- 			$username = $this->input->post('username');
+ 			$username = str_replace(" ","",$this->input->post('username'));
  			$password = $this->input->post('password');
  			$password_word = $this->input->post('password');
  			$email = $this->input->post('email');
@@ -84,8 +84,9 @@
 
  		}
 
- 		$data['profile'] = $this->global_model->find_by('user',array('username' => $this->session->userdata('username')));
- 		$this->load->view('head/dashboard');
+ 		$data['profile'] = $this->global_model->find_by('user',array('username' => $this->session->userdata('namauser')));
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/profile/index', $data); //konten web
  		$this->load->view('footer/dashboard');
  	}

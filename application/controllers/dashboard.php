@@ -18,7 +18,8 @@
 
  	public function index()
  	{
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/dashboard/index'); //konten web
  		$this->load->view('footer/dashboard');
  	}

@@ -32,7 +32,8 @@
  	{
  		$data['kategori'] = $this->global_model->find_all('kategori_barang');
  		$data['load'] = $this->global_model->find_all('barang');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/master/barang/index', $data); //konten web
  		$this->load->view('footer/dashboard');
  	}

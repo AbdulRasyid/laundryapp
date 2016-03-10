@@ -30,7 +30,8 @@
  	public function index()
  	{
  		$data['load'] = $this->global_model->find_all('pelanggan');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/cucian/index', $data); //konten web
  		$this->load->view('footer/dashboard');
  	}
@@ -150,7 +151,8 @@
  		$data['ukuran'] = $this->global_model->find_all('ukuran_benda');
  		$data['kirim'] = $this->global_model->find_all('pengiriman');
  		$data['paket'] = $this->global_model->find_all('paket_kerja');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/cucian/tambah', $data); //konten web
  		$this->load->view('footer/dashboard');	
  	}

@@ -30,7 +30,8 @@
  	public function index()
  	{
  		$data['load'] = $this->global_model->find_all('kategori_barang');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/master/kategoribarang/index',$data); //konten web
  		$this->load->view('footer/dashboard');
  	}

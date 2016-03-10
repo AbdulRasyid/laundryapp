@@ -31,7 +31,8 @@
  	{
  		$data['ukuran'] = $this->global_model->find_all('ukuran');
  		$data['load'] = $this->global_model->find_all('jenis_cucian');
- 		$this->load->view('head/dashboard');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/dashboard', $setting);
  		$this->load->view('konten/master/jeniscucian/index',$data); //konten web
  		$this->load->view('footer/dashboard');
  	}
