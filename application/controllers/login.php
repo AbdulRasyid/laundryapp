@@ -66,7 +66,8 @@
  			}
 
  		}
- 		$this->load->view('head/login');
+ 		$setting['dataperusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+ 		$this->load->view('head/login', $setting);
  		$this->load->view('konten/login/index'); //konten web
  		$this->load->view('footer/login');
  	}

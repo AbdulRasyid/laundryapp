@@ -7,7 +7,7 @@
 
     <link rel='shortcut icon' type='image/x-icon' href='../favicon.ico' />
 
-    <title>Laundry App | <?php echo ucfirst($this->uri->segment(1)); ?></title>
+    <title><?php echo $dataperusahaan['namaperusahaan'];?> | <?php echo ucfirst($this->uri->segment(1)); ?></title>
 
     <link href="<?php echo base_url();?>assets/css/metro.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/metro-icons.css" rel="stylesheet">

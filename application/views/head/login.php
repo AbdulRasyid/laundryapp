@@ -7,7 +7,7 @@
 
     <link rel='shortcut icon' type='image/x-icon' href='../favicon.ico' />
 
-    <title>Laundry Apps | Login</title>
+    <title><?php echo $dataperusahaan['namaperusahaan'];?> | Login</title>
 
     <link href="<?php echo base_url();?>assets/css/metro.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/metro-icons.css" rel="stylesheet">
