@@ -30,9 +30,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php 
+            <?php
             foreach ($load as $cucian) { 
-            ?>  
+            ?>
             <tr class="record">
                 <td>
                     <label class="input-control checkbox small-check no-margin">
@@ -50,7 +50,7 @@
                      echo $sql['nama_status'];
                     ?>
                 </td>
-                <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
+                <td><a href="<?php echo base_url(); ?>index.php/cucian/ubah/<?php echo $cucian['kode_resi'];?>" class="button small-button mif-pencil"></a></td>
             </tr>
             <?php } ?>
         </tbody>
