@@ -42,9 +42,6 @@
  			date_default_timezone_set('Asia/Jakarta');
  			$date = date('m/d/Y H:i:s',time());
  			$data = array(
- 				'kode_resi' => $this->input->post('kode_resi'),
- 				'nama_pelanggan' => $this->input->post('nama_pelanggan'),
- 				'harga_total' => $this->input->post('harga_total'),
  				'user_bayar' => $this->input->post('user_bayar'),
  				'uang_kembali' => $this->input->post('uang_kembali'),
  				'tanggal_bayar' => $date);

@@ -43,13 +43,13 @@
                     <div class="cell">
                         <h5>Kode Resi</h5>
                         <div class="input-control text full-size">
-                            <input type="text" name="kode_resi" id="koderesi" readonly>
+                            <input type="text" name="kode_resi" id="koderesi" disabled>
                         </div>
                     </div>
                     <div class="cell">
                         <h5>Nama Pelanggan</h5>
                         <div class="input-control text full-size" data-role="input">
-                            <input type="text" name="nama_pelanggan" id="namapelanggan">
+                            <input type="text" name="nama_pelanggan" id="namapelanggan" disabled>
                             <button class="button helper-button clear"><span class="mif-cross"></span></button>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="cell">
                         <h5>Total Harga</h5>
                         <div class="input-control text full-size">
-                            <input type="text" name="harga_total" id="totalharga" readonly>
+                            <input type="text" name="harga_total" id="totalharga" disabled>
                         </div>
                     </div>
                     <div class="cell">
