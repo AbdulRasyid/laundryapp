@@ -52,7 +52,8 @@
 	 				$sessiondata = array(
 	 					'namalengkap' => $sql['namalengkap'],
 	 					'namauser' => $sql['username'],
-	 					'emailuser' => $sql['email']);
+	 					'emailuser' => $sql['email'],
+	 					'status' => $sql['status']);
 
 	 				$this->session->set_userdata($sessiondata);
 

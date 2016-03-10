@@ -35,15 +35,30 @@
  			unset($dataprofile['saveprofile']);
 
  			$namalengkap = $this->input->post('namalengkap');
- 			$username = $this->input->post('username');	
+ 			$username = $this->input->post('username');
+ 			$password = $this->input->post('password');
+ 			$password_word = $this->input->post('password');
+ 			$email = $this->input->post('email');
+ 			$tentang = $this->input->post('tentang');
+
+ 			$dataprofile = array(
+ 				'namalengkap' => $namalengkap,
+ 				'username' => $username,
+ 				'password' => $password,
+ 				'password_word' => $password_word,
+ 				'email' => $email,
+ 				'tentang' => $tentang);
+
+
 
  			if($namalengkap == "" && $username == ""){
  				$this->message('alert','Informasi !','Nama dan username tidak boleh kosong','profile');
  			}else{
  				if($this->input->post('password')==""){
  					unset($dataprofile['password']);
+ 					unset($dataprofile['password_word']);
 	 			}else{
-	 				$dataprofile['password'] = md5($this->input->post('password'));
+	 				$dataprofile['password'] = md5($password);
 	 			}
 
 	 			$check = $this->global_model->find_by('user', array('username' => $this->session->userdata('username')));
@@ -57,7 +72,8 @@
 	 			$sessiondata = array(
 	 					'namalengkap' => $sql['namalengkap'],
 	 					'namauser' => $sql['username'],
-	 					'emailuser' => $sql['email']);
+	 					'emailuser' => $sql['email'],
+	 					'status' => $sql['status']);
 
 	 			$this->session->set_userdata($sessiondata);
 
