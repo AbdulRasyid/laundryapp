@@ -7,7 +7,46 @@
 
     <link rel='shortcut icon' type='image/x-icon' href='../favicon.ico' />
 
-    <title><?php echo $dataperusahaan['namaperusahaan'];?> | <?php echo ucfirst($this->uri->segment(1)); ?></title>
+    <title><?php echo $dataperusahaan['namaperusahaan'];?> | 
+    <?php 
+      if($this->uri->segment(1)=="dashboard"){ 
+        $txt = "Dashboard";
+      }else if($this->uri->segment(1)=="layanan"){ 
+        $txt = "Daftar Layanan";
+      }else if($this->uri->segment(1)=="metodekirim"){ 
+        $txt = "Daftar Metode pengiriman";
+      }else if($this->uri->segment(1)=="statusdata"){ 
+        $txt = "Daftar Status";
+      }else if($this->uri->segment(1)=="jeniscucian"){ 
+        $txt = "Daftar Jenis cucian";
+      }else if($this->uri->segment(1)=="ukuran"){ 
+        $txt = "Daftar Ukuran";
+      }else if($this->uri->segment(1)=="ukuranbenda"){ 
+        $txt = "Daftar Ukuran benda";
+      }else if($this->uri->segment(1)=="paket"){ 
+        $txt = "Daftar Paket kerja";
+      }else if($this->uri->segment(1)=="kategoribarang"){ 
+        $txt = "Daftar Kategori barang";
+      }else if($this->uri->segment(1)=="barang"){ 
+        $txt = "Daftar Barang";
+      }else if($this->uri->segment(1)=="rakitharga"){ 
+        $txt = "Rakit Harga";
+      }else if($this->uri->segment(1)=="cucian"){ 
+        $txt = "Cucian";
+      }else if($this->uri->segment(1)=="pembayaran"){ 
+        $txt = "Pembayaran";
+      }else if($this->uri->segment(1)=="status"){ 
+        $txt = "Status cucian";
+      }else if($this->uri->segment(1)=="user"){ 
+        $txt = "Kelola User";
+      }else if($this->uri->segment(1)=="profile"){ 
+        $txt = "Profile";
+      }else if($this->uri->segment(1)=="settingperusahaan"){ 
+        $txt = "Setting profile perusahaan";
+      }
+      echo $txt;
+    ?>
+    </title>
 
     <link href="<?php echo base_url();?>assets/css/metro.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/metro-icons.css" rel="stylesheet">
