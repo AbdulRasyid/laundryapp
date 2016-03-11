@@ -114,19 +114,24 @@
 					 }
 
 					 //simpan ke pembayaran
-					 $sqlquery = "select nama_pelanggan,pelanggan.kode_resi,list_cucian.harga,paket_kerja.harga,
-					 pengiriman.harga_kirim,sum(pengiriman.harga_kirim + paket_kerja.harga + list_cucian.harga) as jumlah 
-					 from pelanggan inner join pengiriman on pelanggan.kode_pengiriman = pengiriman.kode_pengiriman inner join 
-					 paket_kerja on pelanggan.kode_paket = paket_kerja.kode_paket inner join list_cucian 
-					 on pelanggan.kode_resi = list_cucian.kode_resi where pelanggan.kode_resi ='$kode_resi'";
+					 $sqlquery = "select nama_pelanggan, sum(list_cucian.harga) as jumlah, paket_kerja.harga as ongkir_paket, 
+				pengiriman.harga_kirim as ongkir_kirim from pelanggan inner join list_cucian on
+				 pelanggan.kode_resi = list_cucian.kode_resi inner join paket_kerja on pelanggan.kode_paket = paket_kerja.kode_paket
+				  inner join pengiriman on pelanggan.kode_pengiriman = pengiriman.kode_pengiriman where pelanggan.kode_resi ='$kode_resi' 
+				  group by list_cucian.kode_resi";
 
 					 $query = $this->db->query($sqlquery);
 
-					 $row = $query->row(); 
+					$row = $query->row();
+
+					$harganih = $row->jumlah;
+					$ongkirpaket = $row->ongkir_paket;
+					$ongkirkirim = $row->ongkir_kirim;
+					$jadi = $harganih + $ongkirkirim + $ongkirpaket;
 
 					 $pembayaran = array(
 					 		'kode_resi' => $kode_resi,
-	  						'harga_total' => $row->jumlah,
+	  						'harga_total' => (int) $jadi,
 	  						'nama_pelanggan' => $namapelanggan);
 
 					 $this->global_model->create('pembayaran',$pembayaran);
@@ -306,5 +311,25 @@
  		$this->global_model->delete('list_cucian', array('id' => $idhapus));
 
  		redirect(site_url('cucian/ubah/'.$kode_resi));
+ 	}
+
+ 	public function cetak($id){
+
+ 		//simpan ke pembayaran
+		$sqlquery = "select sum(harga) as jumlah from list_cucian where kode_resi='$id' group by kode_resi";
+
+		$query = $this->db->query($sqlquery);
+
+		$row = $query->row();
+
+ 		$data['pelanggan'] = $this->global_model->find_by('pelanggan', array('kode_resi' => $id));
+ 		$data['pembayaran'] = $this->global_model->find_by('pembayaran', array('kode_resi' => $id));
+ 		$data['listitem'] = $this->global_model->find_all_by('list_cucian', array('kode_resi' => $id));
+ 		$data['perusahaan'] = $this->global_model->find_by('perusahaan', array('id' => 1));
+
+ 		$data['total'] = array('jumlah' => $row->jumlah);
+ 		$this->load->view('head/cetak');
+ 		$this->load->view('konten/cucian/cetak', $data); //konten web
+ 		$this->load->view('footer/dashboard');
  	}
  }

@@ -27,7 +27,10 @@
                 <td><?php echo $data['nama_pelanggan'];?></td>
                 <td>Rp. <?php echo $data['harga_total'];?></td>
                 <td><?php if($data['tanggal_bayar'] == ""){ echo "Belum Bayar";}else{echo $data['tanggal_bayar'];}?></td>
-                <td><button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button></td>
+                <td style="width:110px;" class="text-center">
+                    <button type="button" class="editbutton button small-button"><span class="mif-pencil"></span></button>
+                    <a target="_blank" href="<?php echo base_url();?>index.php/cucian/cetak/<?php echo $data['kode_resi'];?>" class="button small-button mif-printer"></button>
+                </td>
             </tr>
             <?php }?>
         </tbody>
